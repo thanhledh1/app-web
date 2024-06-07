@@ -42,7 +42,7 @@ Route::prefix('/')->middleware(['auth'])->group(function () {
         Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
         Route::put('/edit/{id}', [MenuController::class, 'update'])->name('menu.admin.update');
         Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
-        Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
+        // Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
     });
 });
 
@@ -53,3 +53,6 @@ Route::group(['prefix' => 'master'], function () {
 });
 
 
+
+Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('updateOrder');
+Route::post('/menus/updateOrder', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
