@@ -35,24 +35,22 @@ Route::prefix('/')->middleware(['auth'])->group(function () {
     });
     // Menu
     Route::group(['prefix' => 'menu'], function () {
-        Route::get('/', [MenuController::class, 'index'])->name('menu.index');
+        Route::get('/index', [MenuController::class, 'index'])->name('menu.index');
         Route::get('/create', [MenuController::class, 'create'])->name('menu.create');
         Route::post('/store', [MenuController::class, 'store'])->name('menu.store');
         Route::get('/show/{id}', [MenuController::class, 'show'])->name('menu.show');
         Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
         Route::put('/edit/{id}', [MenuController::class, 'update'])->name('menu.admin.update');
         Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
-        // Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
+        Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
     });
 });
 
 // Master
 Route::group(['prefix' => 'master'], function () {
-    Route::get('/index', [MasterController::class, 'index'])->name('user.index');
+    Route::get('/index', [MasterController::class, 'index'])->name('master.index');
     Route::post('/{id}', [MasterController::class, 'update'])->name('menu.update');
 });
 
 
 
-Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('updateOrder');
-Route::post('/menus/updateOrder', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');

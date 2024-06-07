@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+
 
 class UserController extends Controller
 {
@@ -58,32 +59,29 @@ class UserController extends Controller
 
   
 
-    public function update(UserRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        try {
-            $user = User::find($id);
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = bcrypt($request->password);
-            $get_image = $request->image;
-            if ($get_image) {
-                $path = 'admin\uploads\user' . $user->image;
-                if (file_exists($path)) {
-                    unlink($path);
-                }
-                $path = 'admin\uploads\user';
-                $get_name_image = $get_image->getClientOriginalName();
-                $name_image = current(explode('.', $get_name_image));
-                $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-                $get_image->move($path, $new_image);
-                $user->image = $new_image;
-                $data['user_image'] = $new_image;
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        
+        $get_image = $request->image;
+        if ($get_image) {
+            $path = 'admin/uploads/user/' . $user->image; // Fixed the directory separator
+            if (file_exists($path)) {
+                unlink($path);
             }
-            $user->save();
-            return redirect()->route('user.index')->with('success', 'Sửa thành công!');
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            return redirect()->back()->with('error', 'An error occurred. Please try again later.');
+            $path = 'admin/uploads/user'; // Fixed the directory separator
+            $get_name_image = $get_image->getClientOriginalName();
+            $name_image = current(explode('.', $get_name_image));
+            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
+            $get_image->move($path, $new_image);
+            $user->image = $new_image;
         }
+        
+        $user->save();
+        return redirect()->route('user.index')->with('success', 'Sửa thành công!');
     }
+    
     }

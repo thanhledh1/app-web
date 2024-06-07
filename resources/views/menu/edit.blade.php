@@ -13,7 +13,7 @@
         <h2>Edit Menu</h2>
         <div class="row">
             <div class="col-lg-6">
-                <form action="{{ route('menu.update', $menu->id) }}" method="post">
+                <form action="{{ route('menu.admin.update', $menu->id) }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

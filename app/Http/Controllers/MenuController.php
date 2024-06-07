@@ -16,7 +16,7 @@ class MenuController extends Controller
     }
     public function create()
     {
-        
+
         return view('menu.create');
     }
     public function edit($id)
@@ -45,14 +45,23 @@ class MenuController extends Controller
     public function updateOrder(Request $request)
     {
         $order = $request->input('order');
-        
+
         foreach ($order as $item) {
             $menu = Menu::find($item['id']);
             $menu->position = $item['position'];
             $menu->save();
         }
-    
+
         return response()->json(['success' => 'Order updated successfully']);
     }
-    
+    public function update(Request $request, $id)
+    {
+        $menu = Menu::find($id);
+        $menu->title = $request->title;
+        $menu->url = $request->url;
+        $menu->position = $request->position;
+        $menu->active = $request->active;
+        $menu->save();
+        return redirect()->route('menu.index')->with('success', 'Sửa thành công!');
+    }
 }
