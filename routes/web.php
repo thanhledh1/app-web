@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,14 @@ Route::prefix('/')->middleware(['auth'])->group(function () {
         Route::put('/edit/{id}', [MenuController::class, 'update'])->name('menu.admin.update');
         Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
         Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
+    });
+    Route::group(['prefix' => 'section'], function () {
+        Route::get('/index', [SectionController::class, 'index'])->name('section.index');
+        Route::get('/create', [SectionController::class, 'create'])->name('section.create');
+        Route::get('/show/{id}', [SectionController::class, 'show'])->name('section.show');
+        Route::get('/edit/{id}', [SectionController::class, 'edit'])->name('section.edit');
+        Route::put('/update/{id}', [SectionController::class, 'update'])->name('section.update');
+        Route::delete('destroy/{id}', [SectionController::class, 'destroy'])->name('section.destroy');
     });
 });
 

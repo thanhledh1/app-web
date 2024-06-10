@@ -52,92 +52,95 @@
                 <i class="fas fa-bars ms-1"></i>
             </button>
             <div class="container mt-5">
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0 sortable">
-                @foreach ($menus as $menu)
-                    <li class="nav-item d-flex align-items-center" data-id="{{ $menu->id }}">
-                        <a class="nav-link editable" contenteditable="false">{{ $menu->title }}</a>
-                        <button class="btn btn-primary btn-sm ms-2 edit-button">Edit</button>
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-        <div class="notification alert" id="notification"></div>
-    </div>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0 sortable">
+                        @foreach ($menus as $menu)
+                        <li class="nav-item d-flex align-items-center" data-id="{{ $menu->id }}">
+                            <a class="nav-link editable" contenteditable="false" href="{{ $menu->url }}">{{ $menu->title }}</a>
+
+                            <button class="btn btn-primary btn-sm ms-2 edit-button">Edit</button>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="notification alert" id="notification"></div>
+            </div>
     </nav>
 
 
     <script>
-      $(document).ready(function() {
-    // Enable sorting on the menu list
-    $(".sortable").sortable({
-        update: function(event, ui) {
-            var sortedItems = $(".sortable").children('li');
-            var updatedPositions = [];
-            
-            sortedItems.each(function(index, element) {
-                var id = $(element).data('id');
-                var position = index + 1; // New position based on the sorted order
-                updatedPositions.push({ id: id, position: position });
-                $(element).data('position', position); // Update the data-position attribute
-            });
+        $(document).ready(function() {
+            // Enable sorting on the menu list
+            $(".sortable").sortable({
+                update: function(event, ui) {
+                    var sortedItems = $(".sortable").children('li');
+                    var updatedPositions = [];
 
-            // Send the new positions to the server
-            $.ajax({
-                url: '{{ route("menus.updateOrder") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    order: updatedPositions
-                },
-                success: function(response) {
-                    console.log(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error: ' + status + error);
+                    sortedItems.each(function(index, element) {
+                        var id = $(element).data('id');
+                        var position = index + 1; // New position based on the sorted order
+                        updatedPositions.push({
+                            id: id,
+                            position: position
+                        });
+                        $(element).data('position', position); // Update the data-position attribute
+                    });
+
+                    // Send the new positions to the server
+                    $.ajax({
+                        url: '{{ route("menus.updateOrder") }}',
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            order: updatedPositions
+                        },
+                        success: function(response) {
+                            console.log(response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('AJAX Error: ' + status + error);
+                        }
+                    });
                 }
             });
-        }
-    });
 
-    $('.edit-button').on('click', function() {
-        var $editable = $(this).siblings('.editable');
-        $editable.attr('contenteditable', 'true').focus();
-    });
+            $('.edit-button').on('click', function() {
+                var $editable = $(this).siblings('.editable');
+                $editable.attr('contenteditable', 'true').focus();
+            });
 
-    $('.editable').on('blur', function() {
-        var $this = $(this);
-        var id = $this.parent().data('id');
-        var title = $this.text();
-        $this.attr('contenteditable', 'false');
+            $('.editable').on('blur', function() {
+                var $this = $(this);
+                var id = $this.parent().data('id');
+                var title = $this.text();
+                $this.attr('contenteditable', 'false');
 
-        $.ajax({
-            url: '/master/' + id,
-            method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                title: title
-            },
-            success: function(response) {
-                showNotification('success', response.success);
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error: ' + status + error);
-                showNotification('danger', 'Failed to update menu item.');
+                $.ajax({
+                    url: '/master/' + id,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        title: title
+                    },
+                    success: function(response) {
+                        showNotification('success', response.success);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error: ' + status + error);
+                        showNotification('danger', 'Failed to update menu item.');
+                    }
+                });
+            });
+
+            function showNotification(type, message) {
+                var $notification = $('#notification');
+                $notification.removeClass('alert-success alert-danger').addClass('alert-' + type).text(message).fadeIn();
+
+                setTimeout(function() {
+                    $notification.fadeOut();
+                }, 3000);
             }
         });
-    });
-
-    function showNotification(type, message) {
-        var $notification = $('#notification');
-        $notification.removeClass('alert-success alert-danger').addClass('alert-' + type).text(message).fadeIn();
-
-        setTimeout(function() {
-            $notification.fadeOut();
-        }, 3000);
-    }
-});
-
     </script>
 
     <!-- Masthead-->
@@ -149,143 +152,12 @@
         </div>
     </header>
     <!-- Services-->
-    <section class="page-section" id="services">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Services</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-            </div>
-            <div class="row text-center">
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="my-3">E-Commerce</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="my-3">Responsive Design</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-                <div class="col-md-4">
-                    <span class="fa-stack fa-4x">
-                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                        <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
-                    </span>
-                    <h4 class="my-3">Web Security</h4>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    @foreach ($sections as $section)
+    {!! $section->html_content !!}
+    @endforeach
     <!-- Portfolio Grid-->
-    <section class="page-section bg-light" id="portfolio">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Portfolio</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <!-- Portfolio item 1-->
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="assets/img/portfolio/1.jpg" alt="..." />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Threads</div>
-                            <div class="portfolio-caption-subheading text-muted">Illustration</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <!-- Portfolio item 2-->
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="<?php echo e(asset('user/assets/img/portfolio/2.jpg')); ?>" alt="..." />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Explore</div>
-                            <div class="portfolio-caption-subheading text-muted">Graphic Design</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    <!-- Portfolio item 3-->
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="<?php echo e(asset('user/assets/img/portfolio/3.jpg')); ?>" alt="..." />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Finish</div>
-                            <div class="portfolio-caption-subheading text-muted">Identity</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-                    <!-- Portfolio item 4-->
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="<?php echo e(asset('user/assets/img/portfolio/4.jpg')); ?>" alt="..." />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Lines</div>
-                            <div class="portfolio-caption-subheading text-muted">Branding</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
-                    <!-- Portfolio item 5-->
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal5">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="<?php echo e(asset('user/assets/img/portfolio/5.jpg')); ?>" alt="..." />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Southwest</div>
-                            <div class="portfolio-caption-subheading text-muted">Website Design</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <!-- Portfolio item 6-->
-                    <div class="portfolio-item">
-                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6">
-                            <div class="portfolio-hover">
-                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                            </div>
-                            <img class="img-fluid" src="<?php echo e(asset('user/assets/img/portfolio/6.jpg')); ?>" alt="..." />
-                        </a>
-                        <div class="portfolio-caption">
-                            <div class="portfolio-caption-heading">Window</div>
-                            <div class="portfolio-caption-subheading text-muted">Photography</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <!-- About-->
-    <section class="page-section" id="about">
+    <!-- <section class="page-section" id="about">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">About</h2>
@@ -353,7 +225,7 @@
                 </li>
             </ul>
         </div>
-    </section>
+    </section> -->
     <!-- Team-->
     <section class="page-section bg-light" id="team">
         <div class="container">

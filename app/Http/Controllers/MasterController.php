@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -12,8 +13,10 @@ class MasterController extends Controller
 
     public function index()
     {
+        $sections = Section::all();
         $menus = Menu::orderBy('position')->get();
-        return view('master', compact('menus'));
+        // dd($sections);
+        return view('master', compact('menus', 'sections'));
     }
     
     public function update(Request $request, $id)
