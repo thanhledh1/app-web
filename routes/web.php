@@ -49,6 +49,7 @@ Route::prefix('/')->middleware(['auth'])->group(function () {
         Route::get('/index', [SectionController::class, 'index'])->name('section.index');
         Route::get('/create', [SectionController::class, 'create'])->name('section.create');
         Route::get('/show/{id}', [SectionController::class, 'show'])->name('section.show');
+        Route::post('/store', [SectionController::class, 'store'])->name('section.store');
         Route::get('/edit/{id}', [SectionController::class, 'edit'])->name('section.edit');
         Route::put('/update/{id}', [SectionController::class, 'update'])->name('section.update');
         Route::delete('destroy/{id}', [SectionController::class, 'destroy'])->name('section.destroy');
@@ -61,5 +62,6 @@ Route::group(['prefix' => 'master'], function () {
     Route::post('/{id}', [MasterController::class, 'update'])->name('menu.update');
 });
 
-
+Route::put('/section/{id}', [SectionController::class, 'updateSection'])->name('update.section');
+Route::put('/section/content/{id}', [SectionController::class, 'updateContent'])->name('update.content');
 

@@ -11,7 +11,8 @@ class SectionController extends Controller
     public function index()
     {
         $sections = Section::all();
-        return view('section.index', compact('sections'));
+        $section = Section::findOrFail(8);
+        return view('section.index', compact('sections','section'));
     }
     public function create()
     {
@@ -27,41 +28,28 @@ class SectionController extends Controller
 
     public function destroy($id)
     {
-        $section = Section::findOrFail($id);
+        $section = section::findOrFail($id);
         $section->delete();
         return redirect()->route('section.index');
     }
     public function store(Request $request)
     {
         $section = new section();
-        $section->title = $request->title;
-        $section->url = $request->url;
-        $section->position = $request->position;
-        $section->active = $request->active;
+        $section->name = $request->name;
+        $section->html_content = $request->html_content;
         $section->save();
         return redirect()->route('section.index');
     }
 
-    public function updateOrder(Request $request)
-    {
-        $order = $request->input('order');
 
-        foreach ($order as $item) {
-            $section = section::find($item['id']);
-            $section->position = $item['position'];
-            $section->save();
-        }
-
-        return response()->json(['success' => 'Order updated successfully']);
-    }
     public function update(Request $request, $id)
     {
         $section = section::find($id);
-        $section->title = $request->title;
-        $section->url = $request->url;
-        $section->position = $request->position;
-        $section->active = $request->active;
+        $section->name = $request->name;
+        $section->html_content = $request->html_content;
         $section->save();
         return redirect()->route('section.index')->with('success', 'Sửa thành công!');
     }
+    
+
 }

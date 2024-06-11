@@ -13,7 +13,7 @@
         <h2>Create New section</h2>
         <div class="row">
             <div class="col-lg-6">
-                <form action="" method="post">
+                <form action="{{ route('section.store') }}" method="post">
                     @csrf
                     <div class="form-group">
                         <label for="title">Section Name</label>
@@ -26,14 +26,6 @@
                         <label for="url">HTML-Content</label>
                         <textarea class="form-control @error('html_content') is-invalid @enderror" id="html_content" name="html_content" rows="5">{{ old('html_content') }}</textarea>
                         @error('html_content')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="position">Position</label>
-                        <input type="number" class="form-control @error('position') is-invalid @enderror" id="position" name="position" value="{{ old('position') }}">
-                        @error('position')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
