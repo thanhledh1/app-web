@@ -62,7 +62,34 @@
                         </li>
                         @endforeach
                     </ul>
-                </div>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                            <img style=" width: 25%; height: 25px;  " src="{{asset('admin/uploads/user/'.Auth()->user()->image) }}" alt="profile" />
+                            <span class="text-uppercase nav-profile-name">Hello {{ Auth()->user()->name }}</span>
+                        </a>
+    
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+    
+                            <a id="logout-link" class="dropdown-item">
+                                <i class="mdi mdi-logout text-primary"></i>
+                                Logout
+                            </a>
+                            <form id="logout-form" action="" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                            <script>
+                                document.getElementById('logout-link').addEventListener('click', function(event) {
+                                    event.preventDefault();
+                                    document.getElementById('logout-form').submit();
+                                });
+                            </script>
+    
+                        </div>
+                    </li>
+    
+                </ul>
+                    </div>
                 <div class="notification alert" id="notification"></div>
             </div>
     </nav>
@@ -143,6 +170,9 @@
         });
     </script>
 
+
+
+
     <!-- Masthead-->
     <header class="masthead">
         <div class="container">
@@ -186,23 +216,23 @@
                         <div class="col-lg-8">
                             <div class="modal-body">
                                 <!-- Project details-->
-                                <h2 class="text-uppercase">{$session->text_1}</h2>
-                                <p class="item-intro text-muted">{$session->text_2}</p>
-                                <img class="img-fluid d-block mx-auto" src="<?php echo e(asset('user/assets/img/portfolio/1.jpg')); ?>" alt="..." />
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                <img class="img-fluid d-block mx-auto" src="<?php echo e(asset('user/assets/img/portfolio/2.jpg')); ?>" alt="..." />
                                 <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
                                 <ul class="list-inline">
                                     <li>
-                                        <strong>{$session->text_4}:</strong>
-                                        {$session->text_5}
+                                        <strong>Client:</strong>
+                                        Explore
                                     </li>
                                     <li>
-                                        <strong>{$session->text_6}:</strong>
-                                        {$session->text_7}
+                                        <strong>Category:</strong>
+                                        Graphic Design
                                     </li>
                                 </ul>
                                 <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
                                     <i class="fas fa-xmark me-1"></i>
-                                    {$session->text_8}
+                                    Close Project
                                 </button>
                             </div>
                         </div>

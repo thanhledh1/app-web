@@ -53,6 +53,8 @@ Route::prefix('/')->middleware(['auth'])->group(function () {
         Route::get('/edit/{id}', [SectionController::class, 'edit'])->name('section.edit');
         Route::put('/update/{id}', [SectionController::class, 'update'])->name('section.update');
         Route::delete('destroy/{id}', [SectionController::class, 'destroy'])->name('section.destroy');
+        Route::post('/update-services', [SectionController::class, 'updateServices'])->name('section.updateService');
+        Route::post('/update-image', [SectionController::class, 'updateImage'])->name('update.image');
     });
 });
 
@@ -62,6 +64,8 @@ Route::group(['prefix' => 'master'], function () {
     Route::post('/{id}', [MasterController::class, 'update'])->name('menu.update');
 });
 
-Route::put('/section/{id}', [SectionController::class, 'updateSection'])->name('update.section');
-Route::put('/section/content/{id}', [SectionController::class, 'updateContent'])->name('update.content');
+
+
+Route::post('/update-image-about', [SectionController::class, 'updateImageAbout'])->name('update.image1');
+Route::post('/update-image-team', [SectionController::class, 'updateImageTeam'])->name('update.image2');
 

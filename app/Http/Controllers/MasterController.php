@@ -15,6 +15,7 @@ class MasterController extends Controller
     {
         $sections = Section::all();
         $menus = Menu::orderBy('position')->get();
+        
         // dd($sections);
         return view('master', compact('menus', 'sections'));
     }
