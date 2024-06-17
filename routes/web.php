@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LangController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SectionController;
@@ -24,48 +25,56 @@ Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.log
 Route::get('/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/store', [UserController::class, 'store'])->name('user.store');
 
-Route::prefix('/')->middleware(['auth'])->group(function () {
-
+Route::middleware(['auth'])->group(function () {
     // User
-    Route::group(['prefix' => 'user'], function () {
-        Route::get('/index', [UserController::class, 'index'])->name('user.index');
-        Route::get('/show/{id}', [UserController::class, 'show'])->name('user.show');
-        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-        Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
-        Route::delete('destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
-    });
+    Route::resource('users', UserController::class, [
+        'names' => [
+            'index' => 'user.index',
+            'create' => 'user.create',
+            'store' => 'user.store',
+            'show' => 'user.show',
+            'edit' => 'user.edit',
+            'update' => 'user.update',
+            'destroy' => 'user.destroy',
+        ],
+        'parameters' => ['users' => 'id'],
+    ]);
     // Menu
-    Route::group(['prefix' => 'menu'], function () {
-        Route::get('/index', [MenuController::class, 'index'])->name('menu.index');
-        Route::get('/create', [MenuController::class, 'create'])->name('menu.create');
-        Route::post('/store', [MenuController::class, 'store'])->name('menu.store');
-        Route::get('/show/{id}', [MenuController::class, 'show'])->name('menu.show');
-        Route::get('/edit/{id}', [MenuController::class, 'edit'])->name('menu.edit');
-        Route::put('/edit/{id}', [MenuController::class, 'update'])->name('menu.admin.update');
-        Route::delete('destroy/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
-        Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
-    });
-    Route::group(['prefix' => 'section'], function () {
-        Route::get('/index', [SectionController::class, 'index'])->name('section.index');
-        Route::get('/create', [SectionController::class, 'create'])->name('section.create');
-        Route::get('/show/{id}', [SectionController::class, 'show'])->name('section.show');
-        Route::post('/store', [SectionController::class, 'store'])->name('section.store');
-        Route::get('/edit/{id}', [SectionController::class, 'edit'])->name('section.edit');
-        Route::put('/update/{id}', [SectionController::class, 'update'])->name('section.update');
-        Route::delete('destroy/{id}', [SectionController::class, 'destroy'])->name('section.destroy');
-        Route::post('/update-services', [SectionController::class, 'updateServices'])->name('section.updateService');
-        Route::post('/update-image', [SectionController::class, 'updateImage'])->name('update.image');
-    });
+    Route::resource('menu', MenuController::class, [
+        'names' => [
+            'index' => 'menu.index',
+            'create' => 'menu.create',
+            'store' => 'menu.store',
+            'show' => 'menu.show',
+            'edit' => 'menu.edit',
+            'update' => 'menu.admin.update',
+            'destroy' => 'menu.destroy',
+        ],
+        'parameters' => ['menus' => 'id'],
+    ]);
+    Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
+
+    //section
+    Route::resource('section', SectionController::class, [
+        'names' => [
+            'index' => 'section.index',
+            'create' => 'section.create',
+            'store' => 'section.store',
+            'show' => 'section.show',
+            'edit' => 'section.edit',
+            'update' => 'section.update',
+            'destroy' => 'section.destroy',
+        ],
+        'parameters' => ['sections' => 'id'],
+    ]);
+    Route::post('/update-services', [SectionController::class, 'updateServices'])->name('section.updateService');
+    Route::post('/update-image', [SectionController::class, 'updateImage'])->name('update.image');
+    Route::post('/update-image-about', [SectionController::class, 'updateImageAbout'])->name('update.image1');
+    Route::post('/update-image-team', [SectionController::class, 'updateImageTeam'])->name('update.image2');
 });
 
 // Master
 Route::group(['prefix' => 'master'], function () {
-    Route::get('/index', [MasterController::class, 'index'])->name('master.index');
+    Route::get('/', [MasterController::class, 'index'])->name('master.index');
     Route::post('/{id}', [MasterController::class, 'update'])->name('menu.update');
 });
-
-
-
-Route::post('/update-image-about', [SectionController::class, 'updateImageAbout'])->name('update.image1');
-Route::post('/update-image-team', [SectionController::class, 'updateImageTeam'])->name('update.image2');
-

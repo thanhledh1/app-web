@@ -83,5 +83,10 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('user.index')->with('success', 'Sửa thành công!');
     }
+
+    public function show($id){
+        $user = User::find($id);
+        return view('user.show', compact('user'));
+    }
     
     }

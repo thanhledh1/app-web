@@ -29,7 +29,7 @@
                                                 <label class="form-label" for="form3Example1c">Your Name</label>
                                                 <input type="text" id="form3Example1c" class="form-control" name="name" value="{{ old('name') }}" />
                                                 @error('name')
-                                                    <div class="text-danger">{{ $message }}</div>
+                                                    <div class="text-danger">{{ __('validation.required') }}</div>
                                                 @enderror
                                             </div>
                                         </div>

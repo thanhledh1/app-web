@@ -64,4 +64,8 @@ class MenuController extends Controller
         $menu->save();
         return redirect()->route('menu.index')->with('success', 'Sửa thành công!');
     }
+    public function show($id){
+        $menu = Menu::find($id);
+        return view('menu.show', compact('menu'));
+    }
 }

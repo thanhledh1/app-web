@@ -50,8 +50,10 @@
                         <form action="{{ route('user.destroy', $user->id) }}" method="POST" >
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger">DELETE</button>
+                            <button type="submit" class="btn btn-outline-danger"  onclick="confirmDelete()">DELETE</button>
                             <a href="{{ route('user.edit', [$user->id]) }}" class="btn btn-outline-primary">UPDATE</a>
+                            <a href="{{ route('user.show', [$user->id]) }}" class="btn btn-outline-primary">SHOW</a>
+
                         </form>
                     </td>
                 </tr>
@@ -83,5 +85,11 @@
         <button type="submit">Đăng xuất</button>
     </form>
 </body>
-
+<script>
+    function confirmDelete() {
+        if (confirm('Bạn có chắc chắn muốn xóa?')) {
+            document.getElementById('deleteForm').submit();
+        }
+    }
+</script>
 </html>

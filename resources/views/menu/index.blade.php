@@ -27,19 +27,15 @@
 <body>
     <div class="container-fluid">
         <h2>Menu</h2>
-        <table class="table table-bordered" style=" border-collapse: collapse;
-  width: 100%;">
+        <table class="table table-bordered" style="border-collapse: collapse; width: 100%;">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Title</th>
                     <th scope="col">URL</th>
                     <th scope="col">Position</th>
-                    <th scope="col">Parent_id</th>
                     <th scope="col">Active</th>
                     <th scope="col">Action</th>
-
-
                 </tr>
             </thead>
             <tbody>
@@ -49,41 +45,48 @@
                     <td>{{ $menu->title }}</td>
                     <td>{{ $menu->url }}</td>
                     <td>{{ $menu->position }}</td>
-                    <td>{{ $menu->parent_id }}</td>
-                    <td>{{ $menu->active }}</td>
-
-
                     <td>
-                        <form action="{{ route('menu.destroy', $menu->id) }}" method="POST" >
+                        @if($menu->active)
+                        <span style="color: green;">Active</span>
+                        @else
+                        <span style="color: red;">Inactive</span>
+                        @endif
+                    </td>
+                    <td>
+                        <form action="{{ route('menu.destroy', $menu->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger">DELETE</button>
                             <a href="{{ route('menu.edit', [$menu->id]) }}" class="btn btn-outline-primary">UPDATE</a>
+                            <a href="{{ route('menu.show', [$menu->id]) }}" class="btn btn-outline-primary">SHOW</a>
+
                         </form>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
+
     </div>
     {{ $menus->links('pagination::bootstrap-5') }}
 
     @if (session('success'))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                @if (session('success'))
-                    Swal.fire({
-                        icon: 'success',
-                        title: '{{ session('success') }}',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                @endif
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: '{{ session('
+                success ') }}',
+                showConfirmButton: false,
+                timer: 2000
             });
-        </script>
+            @endif
+        });
+    </script>
     @endif
     <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
         @csrf

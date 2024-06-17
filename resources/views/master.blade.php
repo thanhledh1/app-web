@@ -62,7 +62,7 @@
                         </li>
                         @endforeach
                     </ul>
-                <ul class="navbar-nav navbar-nav-right">
+                <!-- <ul class="navbar-nav navbar-nav-right">
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                             <img style=" width: 25%; height: 25px;  " src="{{asset('admin/uploads/user/'.Auth()->user()->image) }}" alt="profile" />
@@ -88,7 +88,7 @@
                         </div>
                     </li>
     
-                </ul>
+                </ul> -->
                     </div>
                 <div class="notification alert" id="notification"></div>
             </div>
@@ -181,12 +181,10 @@
             <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
         </div>
     </header>
+
     @foreach ($sections as $section)
     @include($section->filename)
     @endforeach
-
-
-
 
     <!-- Footer-->
     <footer class="footer py-4">
@@ -427,4 +425,4 @@
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 
-</html><?php /**PATH C:\xampp\htdocs\thanh.levan\code\project-web\resources\views/master.blade.php ENDPATH**/ ?>
+</html>
