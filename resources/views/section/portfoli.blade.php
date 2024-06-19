@@ -10,7 +10,7 @@
     <div class="container">
         <div class="text-center">
             @foreach ($sections as $section)
-            @if ($section->image === "2")
+            @if ($section->cos === "2")
             <h2 class="section-heading text-uppercase editablePortfoli" data-id="{{ $section->id }}" data-field="text_1" contenteditable="true">{{ $section->text_1 }}</h2>
         </div>
         <div class="row">

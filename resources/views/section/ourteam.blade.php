@@ -1,7 +1,7 @@
 <section class="page-section bg-light" id="team">
     <div class="container">
         @foreach ($sections as $section)
-        @if ($section->image === "4")
+        @if ($section->cos === "4")
             <div class="text-center">
                 <h2 class="section-heading text-uppercase editablePortfoli"  data-id="{{ $section->id }}" data-field="text_1" contenteditable="true">{{ $section->text_1 }}</h2>
                 <h3 class="section-subheading text-muted editablePortfoli"   data-id="{{ $section->id }}" data-field="text_2" contenteditable="true">{{ $section->text_2 }}</h3>

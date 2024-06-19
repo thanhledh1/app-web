@@ -11,7 +11,7 @@
         <div class="container">
             <div class="text-center">
                 @foreach ($sections as $section)
-                    @if ($section->image === "1")
+                    @if ($section->cos === "1")
                         <h2 class="editableService" data-id="{{ $section->id }}" data-field="text_1" contenteditable="true">{{ $section->text_1 }}</h2>
                         <h3 class="section-subheading text-muted editableService" data-id="{{ $section->id }}" data-field="text_2" contenteditable="true">{{ $section->text_2 }}</h3>
                     @endif
@@ -19,7 +19,7 @@
             </div>
             <div class="row text-center">
                 @foreach ($sections as $section)
-                @if ($section->image === "1")
+                @if ($section->cos === "1")
                         <div class="col-md-4">
                             <span class="fa-stack fa-4x">
                                 <i class="fas fa-circle fa-stack-2x text-primary"></i>

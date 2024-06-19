@@ -34,13 +34,41 @@ class SectionController extends Controller
         return redirect()->route('section.index');
     }
     public function store(Request $request)
-    {
-        $section = new section();
-        $section->name = $request->name;
-        $section->html_content = $request->html_content;
-        $section->save();
-        return redirect()->route('section.index');
+{
+    $section = new Section();
+    $section->name = $request->name;
+    $section->filename = $request->filename;
+    $section->cos = $request->cos; // COS
+    $section->text_1 = $request->text_1;
+    $section->text_2 = $request->text_2;
+    $section->text_3 = $request->text_3;
+    $section->text_4 = $request->text_4;
+    $section->text_5 = $request->text_5;
+    $section->text_6 = $request->text_6;
+    $section->text_7 = $request->text_7;
+    $section->text_8 = $request->text_8;
+    $section->text_9 = $request->text_9;
+    $section->text_10 = $request->text_10;
+
+    // Array of image columns in the database
+    $imageColumns = ['image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'image_6', 'image_7', 'image_8']; // Add more columns as needed
+
+    $path = 'admin/uploads/section';
+
+    foreach ($imageColumns as $imageColumn) {
+        if ($request->hasFile($imageColumn)) {
+            $image = $request->file($imageColumn);
+            $newImageName = $image->getClientOriginalName();
+            $newImageName = pathinfo($newImageName, PATHINFO_FILENAME) . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path($path), $newImageName);
+            $section->$imageColumn = $newImageName;
+        }
     }
+
+    $section->save();
+    return redirect()->route('section.index');
+}
+
 
 
     public function update(Request $request, $id)

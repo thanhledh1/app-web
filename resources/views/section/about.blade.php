@@ -13,7 +13,7 @@
     <div class="container">
         <div class="text-center">
             @foreach ($sections as $section)
-            @if ($section->image === "3")
+            @if ($section->cos === "3")
             <h2 class="section-heading text-uppercase editablePortfoli" contenteditable="true" data-id="{{ $section->id }}" data-field="text_1">{{ $section->text_1 }}</h2>
         </div>
         <ul class="timeline">

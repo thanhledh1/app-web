@@ -30,8 +30,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class, [
         'names' => [
             'index' => 'user.index',
-            'create' => 'user.create',
-            'store' => 'user.store',
             'show' => 'user.show',
             'edit' => 'user.edit',
             'update' => 'user.update',
@@ -78,3 +76,4 @@ Route::group(['prefix' => 'master'], function () {
     Route::get('/', [MasterController::class, 'index'])->name('master.index');
     Route::post('/{id}', [MasterController::class, 'update'])->name('menu.update');
 });
+
