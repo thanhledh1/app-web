@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 
@@ -54,10 +54,10 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('user.index');
+        return redirect()->route('users.index');
     }
 
-  
+
 
     public function update(Request $request, $id)
     {
@@ -65,7 +65,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        
+
         $get_image = $request->image;
         if ($get_image) {
             $path = 'admin/uploads/user/' . $user->image; // Fixed the directory separator
@@ -79,14 +79,14 @@ class UserController extends Controller
             $get_image->move($path, $new_image);
             $user->image = $new_image;
         }
-        
+
         $user->save();
-        return redirect()->route('user.index')->with('success', 'Sửa thành công!');
+        return redirect()->route('users.index')->with('success', 'Sửa thành công!');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $user = User::find($id);
         return view('user.show', compact('user'));
     }
-    
-    }
+}

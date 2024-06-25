@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\LangController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SectionController;
@@ -19,52 +18,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AuthController::class, 'login'])->name('login');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/postlogin', [AuthController::class, 'postlogin'])->name('postlogin');
-Route::post('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+Route::post('/admin/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/store', [UserController::class, 'store'])->name('user.store');
 
 Route::middleware(['auth'])->group(function () {
     // User
-    Route::resource('users', UserController::class, [
-        'names' => [
-            'index' => 'user.index',
-            'show' => 'user.show',
-            'edit' => 'user.edit',
-            'update' => 'user.update',
-            'destroy' => 'user.destroy',
-        ],
-        'parameters' => ['users' => 'id'],
-    ]);
+    Route::resource('users', UserController::class);
     // Menu
-    Route::resource('menu', MenuController::class, [
-        'names' => [
-            'index' => 'menu.index',
-            'create' => 'menu.create',
-            'store' => 'menu.store',
-            'show' => 'menu.show',
-            'edit' => 'menu.edit',
-            'update' => 'menu.admin.update',
-            'destroy' => 'menu.destroy',
-        ],
-        'parameters' => ['menus' => 'id'],
-    ]);
+    Route::resource('menu', MenuController::class);
     Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
-
     //section
-    Route::resource('section', SectionController::class, [
-        'names' => [
-            'index' => 'section.index',
-            'create' => 'section.create',
-            'store' => 'section.store',
-            'show' => 'section.show',
-            'edit' => 'section.edit',
-            'update' => 'section.update',
-            'destroy' => 'section.destroy',
-        ],
-        'parameters' => ['sections' => 'id'],
-    ]);
+    Route::resource('section', SectionController::class);
     Route::post('/update-services', [SectionController::class, 'updateServices'])->name('section.updateService');
     Route::post('/update-image', [SectionController::class, 'updateImage'])->name('update.image');
     Route::post('/update-image-about', [SectionController::class, 'updateImageAbout'])->name('update.image1');
@@ -72,8 +39,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Master
-Route::group(['prefix' => 'master'], function () {
     Route::get('/', [MasterController::class, 'index'])->name('master.index');
-    Route::post('/{id}', [MasterController::class, 'update'])->name('menu.update');
-});
+    Route::post('master/{id}', [MasterController::class, 'update'])->name('menu.update');
 

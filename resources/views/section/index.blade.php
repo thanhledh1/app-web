@@ -33,7 +33,8 @@
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Context-HTML</th>
+                    <th scope="col">File Name</th>
+                    <th scope="col">COS</th>
                     <th scope="col">Action</th>
 
 
@@ -44,7 +45,8 @@
                 <tr>
                     <th scope="row">{{ $section->id }}</th>
                     <td>{{ $section->name }}</td>
-                    <td>{{ Str::limit($section->html_content, 10) }}</td>
+                    <td>{{ $section->filename }}</td>
+                    <td>{{ $section->cos }}</td>
                     <td>
                         <form action="{{ route('section.destroy', $section->id) }}" method="POST" >
                             @csrf

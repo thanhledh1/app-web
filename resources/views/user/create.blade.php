@@ -20,7 +20,7 @@
 
                                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                                    <form class="mx-1 mx-md-4" action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
+                                    <form class="mx-1 mx-md-4" action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
 
                                         <div class="d-flex flex-row align-items-center mb-4">

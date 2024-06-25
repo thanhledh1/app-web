@@ -10,29 +10,47 @@
     <div class="container">
         <div class="text-center">
             @foreach ($sections as $section)
-            @if ($section->cos === "2")
-            <h2 class="section-heading text-uppercase editablePortfoli" data-id="{{ $section->id }}" data-field="text_1" contenteditable="true">{{ $section->text_1 }}</h2>
-        </div>
-        <div class="row">
-            @for ($i = 1; $i <= 6; $i++)
-            <div class="col-lg-4 col-sm-6 mb-4">
-                <div class="portfolio-item">
-                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal{{ $i }}">
-                        <img class="img-fluid fixed-size " id="image_{{ $i }}" src="{{ asset('user/assets/img/portfolio/' . $section->{'image_'.$i}) }}" alt="..." />
-                    </a>
-                    <div class="portfolio-caption">
-                        <input type="file" class="file-input" id="fileInput{{ $i }}" data-id="{{ $section->id }}" data-field="image_{{ $i }}" style="display: none;" />
-                        <i class="fas fa-plus fa-3x" onclick="document.getElementById('fileInput{{ $i }}').click()"></i>
-                        <div class="portfolio-caption-heading editablePortfoli" data-id="{{ $section->id }}" data-field="text_{{ $i+1 }}" contenteditable="true">{{ $section->{'text_'.($i+1)} }}</div>
-                    </div>
+                @if ($section->cos === "2")
+                    <h2 class="section-heading text-uppercase editablePortfoli" data-id="{{ $section->id }}" data-field="text_1" contenteditable="true">{{ $section->text_1 }}</h2>
                 </div>
-            </div>
-            @endfor
+                <div class="row">
+                    @for ($i = 1; $i <= 6; $i++)
+                        <div class="col-lg-4 col-sm-6 mb-4">
+                            <div class="portfolio-item">
+                                <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal{{ $i }}">
+                                    <img class="img-fluid fixed-size" id="image_{{ $i }}" src="{{ asset('user/assets/img/portfolio/' . $section->{'image_'.$i}) }}" alt="..." />
+                                </a>
+                                <div class="portfolio-caption">
+                                    <input type="file" class="file-input" id="fileInput{{ $i }}" data-id="{{ $section->id }}" data-field="image_{{ $i }}" style="display: none;" />
+                                    <i class="fas fa-plus fa-3x" onclick="document.getElementById('fileInput{{ $i }}').click()"></i>
+                                    <div class="portfolio-caption-heading editablePortfoli" data-id="{{ $section->id }}" data-field="text_{{ $i+1 }}" contenteditable="true">{{ $section->{'text_'.($i+1)} }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+                @endif
+            @endforeach
         </div>
-        @endif
-        @endforeach
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @guest
+            document.querySelectorAll('.editablePortfoli').forEach(function(element) {
+                element.setAttribute('contenteditable', 'false');
+            });
+            document.querySelectorAll('.file-input').forEach(function(element) {
+                element.style.display = 'none';
+            });
+            document.querySelectorAll('.fa-plus').forEach(function(element) {
+                element.style.display = 'none';
+            });
+        @endguest
+    });
+</script>
+
 
 <script>
     $(document).ready(function() {

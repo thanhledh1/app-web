@@ -15,7 +15,6 @@ class MasterController extends Controller
     {
         $sections = Section::all();
         $menus = Menu::orderBy('position')->get();
-        
         // dd($sections);
         return view('master', compact('menus', 'sections'));
     }
@@ -25,7 +24,6 @@ class MasterController extends Controller
         $menu = Menu::findOrFail($id);
         $menu->title = $request->title;
         $menu->save();
-
         return response()->json(['success' => 'Menu item updated successfully.']);
     }
     

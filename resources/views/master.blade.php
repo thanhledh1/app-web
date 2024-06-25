@@ -52,46 +52,71 @@
                 <i class="fas fa-bars ms-1"></i>
             </button>
             <div class="container mt-5">
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0 sortable">
-                        @foreach ($menus as $menu)
-                        <li class="nav-item d-flex align-items-center" data-id="{{ $menu->id }}">
-                            <a class="nav-link editable" contenteditable="false" href="{{ $menu->url }}">{{ $menu->title }}</a>
-
-                            <button class="btn btn-primary btn-sm ms-2 edit-button">Edit</button>
-                        </li>
-                        @endforeach
-                    </ul>
-                <!-- <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item nav-profile dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                            <img style=" width: 25%; height: 25px;  " src="{{asset('admin/uploads/user/'.Auth()->user()->image) }}" alt="profile" />
-                            <span class="text-uppercase nav-profile-name">Hello {{ Auth()->user()->name }}</span>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0 sortable">
+            @foreach ($menus as $menu)
+            <li class="nav-item d-flex align-items-center" data-id="{{ $menu->id }}">
+                <a class="nav-link editable" contenteditable="false" href="{{ $menu->url }}">{{ $menu->title }}</a>
+                @auth
+                <button class="btn btn-primary btn-sm ms-2 edit-button">Edit</button>
+                @endauth
+            </li>
+            @endforeach
+            <ul class="navbar-nav ms-auto">
+                @guest
+                <li class="nav-item"><a class="btn btn-outline-warning" href="{{ route('user.create') }}">SIGN UP</a></li>
+                <li class="nav-item"><a class="btn btn-outline-warning" href="{{ route('login') }}">LOG IN</a></li>
+                @else
+                <li class="nav-item nav-profile dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                        <span class="text-uppercase nav-profile-name">Hello {{ Auth::user()->name }}</span>
+                        <img style=" width: 25%; height: 25px;" src="{{ asset('admin/uploads/user/'.Auth::user()->image) }}" alt="profile" />
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                        <a id="logout-link" class="dropdown-item" href="#">
+                            <i class="mdi mdi-logout text-primary"></i>
+                            Logout
                         </a>
-    
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-    
-                            <a id="logout-link" class="dropdown-item">
-                                <i class="mdi mdi-logout text-primary"></i>
-                                Logout
-                            </a>
-                            <form id="logout-form" action="" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                            <script>
-                                document.getElementById('logout-link').addEventListener('click', function(event) {
-                                    event.preventDefault();
-                                    document.getElementById('logout-form').submit();
-                                });
-                            </script>
-    
-                        </div>
-                    </li>
-    
-                </ul> -->
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <script>
+                            document.getElementById('logout-link').addEventListener('click', function(event) {
+                                event.preventDefault();
+                                document.getElementById('logout-form').submit();
+                            });
+                        </script>
                     </div>
-                <div class="notification alert" id="notification"></div>
-            </div>
+                </li>
+                @endguest
+            </ul>
+        </ul>
+    </div>
+    <div class="notification alert" id="notification"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @auth
+            document.querySelectorAll('.edit-button').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const navLink = this.previousElementSibling;
+                    navLink.contentEditable = true;
+                    navLink.focus();
+                });
+            });
+        @endauth
+        @guest
+            document.querySelectorAll('.editable').forEach(function(element) {
+                element.setAttribute('contenteditable', 'false');
+            });
+            document.querySelectorAll('.edit-button').forEach(function(button) {
+                button.style.display = 'none';
+            });
+        @endguest
+    });
+</script>
+
     </nav>
 
 

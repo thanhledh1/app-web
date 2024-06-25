@@ -47,12 +47,12 @@
                     <td>{{ $user->email }}</td>
                     <td><img src="{{ asset('admin/uploads/user/' . $user->image) }}" alt="User Image"></td>
                     <td>
-                        <form action="{{ route('user.destroy', $user->id) }}" method="POST" >
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" >
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger"  onclick="confirmDelete()">DELETE</button>
-                            <a href="{{ route('user.edit', [$user->id]) }}" class="btn btn-outline-primary">UPDATE</a>
-                            <a href="{{ route('user.show', [$user->id]) }}" class="btn btn-outline-primary">SHOW</a>
+                            <a href="{{ route('users.edit', [$user->id]) }}" class="btn btn-outline-primary">UPDATE</a>
+                            <a href="{{ route('users.show', [$user->id]) }}" class="btn btn-outline-primary">SHOW</a>
 
                         </form>
                     </td>
@@ -80,7 +80,7 @@
             });
         </script>
     @endif
-    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
+    <form id="logout-form" action="{{ route('logout') }}" method="POST">
         @csrf
         <button type="submit">Đăng xuất</button>
     </form>

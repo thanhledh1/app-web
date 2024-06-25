@@ -24,7 +24,7 @@ class AuthController extends Controller
 
     if (Auth::attempt($credentials)) {
         // Email và mật khẩu hợp lệ
-        return redirect()->route('user.index')->with('success', 'Logged in successfully!');
+        return redirect()->route('master.index')->with('success', 'Logged in successfully!');
     } else {
         // Email hoặc mật khẩu không hợp lệ
         return back()->withErrors([
@@ -35,7 +35,7 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('login');
+        return redirect()->route('master.index');
     }
     
 }

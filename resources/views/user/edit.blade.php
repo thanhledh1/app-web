@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-6">
 
-                <form action="{{ route('user.update', $user->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('users.update', $user->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="form-group">

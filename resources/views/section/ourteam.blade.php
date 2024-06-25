@@ -2,40 +2,49 @@
     <div class="container">
         @foreach ($sections as $section)
         @if ($section->cos === "4")
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase editablePortfoli"  data-id="{{ $section->id }}" data-field="text_1" contenteditable="true">{{ $section->text_1 }}</h2>
-                <h3 class="section-subheading text-muted editablePortfoli"   data-id="{{ $section->id }}" data-field="text_2" contenteditable="true">{{ $section->text_2 }}</h3>
-            </div>
-            <div class="row">
-                @for ($i = 1; $i <= 3; $i++)
-                <div class="col-lg-4">
-                    <div class="team-member">
-
-
-
-                        <img class="mx-auto rounded-circle" src="{{ asset('user/assets/img/team/' . $section->{'image_' . $i}) }}" onclick="document.getElementById('fileInput2{{ $i }}').click()" alt="..." />
-                        
-                        <div class="portfolio-caption">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase editablePortfoli" data-id="{{ $section->id }}" data-field="text_1" contenteditable="true">{{ $section->text_1 }}</h2>
+            <h3 class="section-subheading text-muted editablePortfoli" data-id="{{ $section->id }}" data-field="text_2" contenteditable="true">{{ $section->text_2 }}</h3>
+        </div>
+        <div class="row">
+            @for ($i = 1; $i <= 3; $i++) <div class="col-lg-4">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="{{ asset('user/assets/img/team/' . $section->{'image_' . $i}) }}" onclick="document.getElementById('fileInput2{{ $i }}').click()" alt="..." />
+                    <div class="portfolio-caption">
                         <input type="file" class="file-input2" id="fileInput2{{ $i }}" data-id="{{ $section->id }}" data-field="image_{{ $i }}" style="display: none;" />
                     </div>
-
-
-
-                        <h4 class="section-heading text-uppercase editablePortfoli"  data-id="{{ $section->id }}" data-field="{{'text_' . (3 + 2 * ($i - 1))}}" contenteditable="true">{{ $section->{'text_' . (3 + 2 * ($i - 1))} }}</h4>
-                        <p class="text-muted editablePortfoli" data-id="{{ $section->id }}" data-field="{{'text_' . (4 + 2 * ($i - 1))}}" contenteditable="true">{{ $section->{'text_' . (4 + 2 * ($i - 1))} }}</p>
-                    </div>
+                    <h4 class="section-heading text-uppercase editablePortfoli" data-id="{{ $section->id }}" data-field="{{'text_' . (3 + 2 * ($i - 1))}}" contenteditable="true">{{ $section->{'text_' . (3 + 2 * ($i - 1))} }}</h4>
+                    <p class="text-muted editablePortfoli" data-id="{{ $section->id }}" data-field="{{'text_' . (4 + 2 * ($i - 1))}}" contenteditable="true">{{ $section->{'text_' . (4 + 2 * ($i - 1))} }}</p>
                 </div>
-                @endfor
-            </div>
-            <div class="row">
-                <div class="col-lg-8 mx-auto text-center">
-                    <p class="large text-muted">{{ $section->text_9 }}</p>
-                </div>á
-            </div>
-        @endif
-        @endforeach
+        </div>
+        @endfor
+    </div>
+    <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+            <p class="large text-muted">{{ $section->text_9 }}</p>
+        </div>
+    </div>
+    @endif
+    @endforeach
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @guest
+        document.querySelectorAll('.editablePortfoli').forEach(function(element) {
+            element.setAttribute('contenteditable', 'false');
+        });
+        document.querySelectorAll('.file-input2').forEach(function(element) {
+            element.style.display = 'none';
+        });
+        document.querySelectorAll('.fa-plus').forEach(function(element) {
+            element.style.display = 'none';
+        });
+        @endguest
+    });
+</script>
+
 <script>
     $(document).ready(function() {
 

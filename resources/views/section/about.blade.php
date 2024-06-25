@@ -36,14 +36,31 @@
                 </li>
                 @endfor
                 <li class="timeline-inverted">
-                    <div class="timeline-image">
-                    </div>
+                    <div class="timeline-image"></div>
                 </li>
         </ul>
         @endif
         @endforeach
     </div>
+    </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @guest
+        document.querySelectorAll('.editablePortfoli').forEach(function(element) {
+            element.setAttribute('contenteditable', 'false');
+        });
+        document.querySelectorAll('.file-input1').forEach(function(element) {
+            element.style.display = 'none';
+        });
+        document.querySelectorAll('.fa-plus').forEach(function(element) {
+            element.style.display = 'none';
+        });
+        @endguest
+    });
+</script>
+
 <script>
     $(document).ready(function() {
 
