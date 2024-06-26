@@ -25,12 +25,14 @@
 </head>
 
 <body>
+@extends('masteradmin')
+@section('content')
     <div class="container-fluid">
         <h2> Section </h2>
-        <table class="table table-bordered" style=" border-collapse: collapse;
+        <table class="table table-striped" style=" border-collapse: collapse;
   width: 100%;">
             <thead class="thead-light">
-                <tr>
+                <tr style="text-align: center;">
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">File Name</th>
@@ -69,3 +71,4 @@
         }
     }
 </script>
+@endsection

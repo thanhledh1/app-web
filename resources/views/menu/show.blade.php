@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+@extends('masteradmin')
+@section('content')
 
 <head>
     <meta charset="UTF-8">
@@ -22,7 +24,7 @@
 </head>
 
 <body>
-    <div class="container ">
+    <div class="content-wrapper">
         <h2>Detail</h2>
         <div class="row">
             <div class="col-lg-6">
@@ -58,9 +60,10 @@
                     </tbody>
                 </table>
             </div>
-
-
         </div>
+
+    </div>
 </body>
 
 </html>
+@endsection

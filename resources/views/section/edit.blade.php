@@ -9,6 +9,8 @@
 </head>
 
 <body>
+@extends('masteradmin')
+@section('content')
     <div class="container">
         <h2>Edit section</h2>
         <div class="row">
@@ -32,3 +34,4 @@
 </body>
 
 </html>
+@endsection

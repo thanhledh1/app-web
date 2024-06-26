@@ -42,3 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', [MasterController::class, 'index'])->name('master.index');
     Route::post('master/{id}', [MasterController::class, 'update'])->name('menu.update');
 
+    Route::get('/masteradmin', function () {
+        return view('masteradmin');
+    });
+    

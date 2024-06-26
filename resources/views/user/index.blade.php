@@ -1,3 +1,6 @@
+@extends('masteradmin')
+@section('content')
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,9 +28,10 @@
 </head>
 
 <body>
+    <h4 class="card-title">Users Table</h4>
     <div class="container-fluid">
-        <h2>User</h2>
-        <table class="table table-bordered" style=" border-collapse: collapse;
+        
+        <table  class="table table-striped" style=" border-collapse: collapse;
   width: 100%;">
             <thead class="thead-light">
                 <tr>
@@ -47,12 +51,12 @@
                     <td>{{ $user->email }}</td>
                     <td><img src="{{ asset('admin/uploads/user/' . $user->image) }}" alt="User Image"></td>
                     <td>
-                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" >
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger"  onclick="confirmDelete()">DELETE</button>
+                            <button type="submit" class="btn btn-outline-danger" onclick="confirmDelete()">DELETE</button>
                             <a href="{{ route('users.edit', [$user->id]) }}" class="btn btn-outline-primary">UPDATE</a>
-                            <a href="{{ route('users.show', [$user->id]) }}" class="btn btn-outline-primary">SHOW</a>
+                            <a href="{{ route('users.show', [$user->id]) }}" class="btn btn-outline-info">SHOW</a>
 
                         </form>
                     </td>
@@ -65,25 +69,26 @@
 
     @if (session('success'))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                @if (session('success'))
-                    Swal.fire({
-                        icon: 'success',
-                        title: '{{ session('success') }}',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
-                @endif
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: '{{ session('
+                success ') }}',
+                showConfirmButton: false,
+                timer: 2000
             });
-        </script>
+            @endif
+        });
+    </script>
     @endif
-    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+    <!-- <form id="logout-form" action="{{ route('logout') }}" method="POST">
         @csrf
         <button type="submit">Đăng xuất</button>
-    </form>
+    </form> -->
 </body>
 <script>
     function confirmDelete() {
@@ -92,4 +97,6 @@
         }
     }
 </script>
+
 </html>
+@endsection

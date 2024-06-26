@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+@extends('masteradmin')
+@section('content')
 
 <head>
     <meta charset="UTF-8">
@@ -22,38 +24,40 @@
 </head>
 
 <body>
-    <div class="container ">
+    <div class="content-wrapper">
         <h2>Detail</h2>
         <div class="row">
             <div class="col-lg-6">
 
-            <table class="table table-bordered" style=" border-collapse: collapse;
+                <table class="table table-bordered" style=" border-collapse: collapse;
   width: 100%;">
-                        <thead>
-                            <tr>
-                                <th>Category</th>
-                                <th>Information</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Name</td>
-                                <td>{{ $user->name }}</td>
-                            </tr>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <td>{{ $user->name }}</td>
+                        </tr>
 
-                            <tr>
-                                <td>Email</td>
-                                <td>{{ $user->email }}</td>
-                            </tr>
-                                <td>Image</td>
-                                <td><img src="{{ asset('admin/uploads/user/' . $user->image) }}" alt="User Image"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{ $user->email }}</td>
+                        </tr>
+                        <td>Image</td>
+                        <td><img src="{{ asset('admin/uploads/user/' . $user->image) }}" alt="User Image"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-           
-
         </div>
+
+
+    </div>
 </body>
 
 </html>
+@endsection

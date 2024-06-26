@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
+@extends('masteradmin')
+@section('content')
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,7 +59,7 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger">DELETE</button>
                             <a href="{{ route('menu.edit', [$menu->id]) }}" class="btn btn-outline-primary">UPDATE</a>
-                            <a href="{{ route('menu.show', [$menu->id]) }}" class="btn btn-outline-primary">SHOW</a>
+                            <a href="{{ route('menu.show', [$menu->id]) }}" class="btn btn-outline-info">SHOW</a>
 
                         </form>
                     </td>
@@ -88,10 +89,7 @@
         });
     </script>
     @endif
-    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
-        @csrf
-        <button type="submit">Đăng xuất</button>
-    </form>
 </body>
 
 </html>
+@endsection
