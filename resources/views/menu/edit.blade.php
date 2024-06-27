@@ -10,38 +10,40 @@
 </head>
 
 <body>
-    <div class="container">
-        <h2>Edit Menu</h2>
-        <div class="row">
-            <div class="col-lg-6">
-                <form action="{{ route('menu.update', $menu->id) }}" method="post">
+ 
+
+    <div class="card-body">
+                    <h4 class="card-title">Edit Menu</h4>
+                    <p class="card-description">
+                     
+                    </p>
+                    <form class="forms-sample" action="{{ route('menu.update', $menu->id) }}" method="post">
                     @csrf
                     @method('PUT')
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" value="{{ $menu->title }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="url">URL</label>
-                        <input type="text" class="form-control" id="url" name="url" value="{{ $menu->url }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="position">Position</label>
+                      <div class="form-group col-md-8 ">
+                        <label for="exampleInputName1">Title</label>
+                        <input type="text" class="form-control"  id="title" name="title" value="{{ $menu->title }}">
+                      </div>
+                      <div class="form-group col-md-8 ">
+                        <label for="exampleInputEmail3">URL</label>
+                        <input type="email" class="form-control" id="url" name="url" value="{{ $menu->url }}">
+                      </div>
+                      <div class="form-group col-md-8 ">
+                        <label for="exampleInputPassword4">Position</label>
                         <input type="number" class="form-control" id="position" name="position" value="{{ $menu->position }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="active">Active</label>
-                        <select class="form-control" id="active" name="active">
-                            <option value="1" {{ $menu->active == '1' ? 'selected' : '' }}>Active</option>
-                            <option value="0" {{ $menu->active == '0' ? 'selected' : '' }}>Inactive</option>
+                      </div>
+                      <div class="form-group col-md-8 ">
+                        <label for="exampleSelectGender">Active</label>
+                        <select class="form-select"id="active" name="active">
+                        <option value="1" {{ $menu->active == '1' ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ $menu->active == '0' ? 'selected' : '' }}>Inactive</option>
                         </select>
-                    </div>
-                  
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
+                      </div>
+                   
+                      <button type="submit" class="btn btn-primary me-2">Submit</button>
+                      <button class="btn btn-light">Cancel</button>
+                    </form>
+                  </div>
 </body>
 
 </html>

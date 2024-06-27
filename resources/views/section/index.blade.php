@@ -27,8 +27,9 @@
 <body>
 @extends('masteradmin')
 @section('content')
+<h4 class="card-title">Section Table</h4>
+
     <div class="container-fluid">
-        <h2> Section </h2>
         <table class="table table-striped" style=" border-collapse: collapse;
   width: 100%;">
             <thead class="thead-light">

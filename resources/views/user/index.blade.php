@@ -1,6 +1,3 @@
-@extends('masteradmin')
-@section('content')
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +9,9 @@
     <!-- Bao gồm thư viện SweetAlert2 và jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <style>
         img {
             border: 1px solid #ddd;
@@ -26,15 +26,17 @@
         }
     </style>
 </head>
+@extends('masteradmin')
+@section('content')
 
 <body>
     <h4 class="card-title">Users Table</h4>
     <div class="container-fluid">
-        
-        <table  class="table table-striped" style=" border-collapse: collapse;
+
+        <table class="table table-striped" style=" border-collapse: collapse;
   width: 100%;">
             <thead class="thead-light">
-                <tr>
+                <tr style="text-align: center;">
                     <th scope="col">id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
@@ -55,7 +57,7 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger" onclick="confirmDelete()">DELETE</button>
-                            <a href="{{ route('users.edit', [$user->id]) }}" class="btn btn-outline-primary">UPDATE</a>
+                            <a href="{{ route('users.edit', [$user->id]) }}" class="btn btn-outline-primary ">UPDATE</a>
                             <a href="{{ route('users.show', [$user->id]) }}" class="btn btn-outline-info">SHOW</a>
 
                         </form>
@@ -68,9 +70,6 @@
     {{ $users->links('pagination::bootstrap-5') }}
 
     @if (session('success'))
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script>
         $(document).ready(function() {
             @if(session('success'))
@@ -85,18 +84,15 @@
         });
     </script>
     @endif
-    <!-- <form id="logout-form" action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit">Đăng xuất</button>
-    </form> -->
-</body>
-<script>
-    function confirmDelete() {
-        if (confirm('Bạn có chắc chắn muốn xóa?')) {
-            document.getElementById('deleteForm').submit();
+
+    <script>
+        function confirmDelete() {
+            if (confirm('Bạn có chắc chắn muốn xóa?')) {
+                document.getElementById('deleteForm').submit();
+            }
         }
-    }
-</script>
+    </script>
+</body>
 
 </html>
 @endsection

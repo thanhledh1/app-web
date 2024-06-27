@@ -2,6 +2,7 @@
 <html lang="en">
 @extends('masteradmin')
 @section('content')
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,8 +27,9 @@
 </head>
 
 <body>
+    <h4 class="card-title">Menu Table</h4>
+
     <div class="container-fluid">
-        <h2>Menu</h2>
         <table class="table table-bordered" style="border-collapse: collapse; width: 100%;">
             <thead class="thead-light">
                 <tr>
@@ -48,9 +50,9 @@
                     <td>{{ $menu->position }}</td>
                     <td>
                         @if($menu->active)
-                        <span style="color: green;">Active</span>
+                        <span class="badge badge-success">Active</span>
                         @else
-                        <span style="color: red;">Inactive</span>
+                        <span class="badge badge-danger">Inactive</span>
                         @endif
                     </td>
                     <td>
