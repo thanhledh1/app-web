@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -31,6 +32,7 @@
             display: none;
             margin-top: 10px;
         }
+
         .sortable-placeholder {
             border: 1px dashed #ccc;
             background: #f9f9f9;
@@ -50,69 +52,138 @@
                 <i class="fas fa-bars ms-1"></i>
             </button>
             <div class="container mt-5">
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0 sortable">
-            @foreach ($menus as $menu)
-            <li class="nav-item d-flex align-items-center" data-id="{{ $menu->id }}">
-                <a class="nav-link editable" contenteditable="false" href="{{ $menu->url }}">{{ $menu->title }}</a>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0 sortable">
+                        @foreach ($menus as $menu)
+                        <li class="nav-item d-flex align-items-center" data-id="{{ $menu->id }}">
+
+                            <input type="checkbox" name="selected_menus[]" value="{{ $menu->id }}" class="menu-checkbox">
+
+                            <a class="nav-link editable" contenteditable="false" href="{{ $menu->url }}">{{ $menu->title }}</a>
+                            @auth
+                            <button class="btn btn-primary btn-sm ms-2 edit-button">Edit</button>
+                            @endauth
+                        </li>
+                        @endforeach
+                        <ul class="navbar-nav ms-auto">
+                            @guest
+                            <li class="nav-item"><a class="btn btn-outline-warning" href="{{ route('user.create') }}">SIGN UP</a></li>
+                            <li class="nav-item"><a class="btn btn-outline-warning" href="{{ route('login') }}">LOG IN</a></li>
+                            @else
+                            <li class="nav-item nav-profile dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                                    <span class="text-uppercase nav-profile-name">Hello {{ Auth::user()->name }}</span>
+                                    <!-- <img style=" width: 25%; height: 25px;" src="{{ asset('admin/uploads/user/'.Auth::user()->image) }}" alt="profile" /> -->
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                                    <a id="logout-link" class="dropdown-item" href="#">
+                                        <i class="mdi mdi-logout text-primary"></i>
+                                        Logout
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                    <script>
+                                        document.getElementById('logout-link').addEventListener('click', function(event) {
+                                            event.preventDefault();
+                                            document.getElementById('logout-form').submit();
+                                        });
+                                    </script>
+                                </div>
+                            </li>
+                            @endguest
+                        </ul>
+                    </ul>
+
+                </div>
+                <div class="notification alert" id="notification"></div>
+
                 @auth
-                <button class="btn btn-primary btn-sm ms-2 edit-button">Edit</button>
+                <form id="add-selected-menus-form" method="POST" action="{{ route('addSelectedMenusToIntermediateTable') }}">
+                    @csrf
+                    <input type="hidden" name="page_id" value="{{ $page->id }}">
+
+                    <button type="submit" class="btn btn-primary mt-3">Create Web</button>
+                </form>
                 @endauth
-            </li>
-            @endforeach
-            <ul class="navbar-nav ms-auto">
-                @guest
-                <li class="nav-item"><a class="btn btn-outline-warning" href="{{ route('user.create') }}">SIGN UP</a></li>
-                <li class="nav-item"><a class="btn btn-outline-warning" href="{{ route('login') }}">LOG IN</a></li>
-                @else
-                <li class="nav-item nav-profile dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                        <span class="text-uppercase nav-profile-name">Hello {{ Auth::user()->name }}</span>
-                        <!-- <img style=" width: 25%; height: 25px;" src="{{ asset('admin/uploads/user/'.Auth::user()->image) }}" alt="profile" /> -->
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                        <a id="logout-link" class="dropdown-item" href="#">
-                            <i class="mdi mdi-logout text-primary"></i>
-                            Logout
-                        </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                        <script>
-                            document.getElementById('logout-link').addEventListener('click', function(event) {
-                                event.preventDefault();
-                                document.getElementById('logout-form').submit();
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Xử lý khi nhấn nút "Add Selected Menus to Intermediate Table"
+                    document.getElementById('add-selected-menus-form').addEventListener('submit', function(event) {
+                        event.preventDefault();
+
+                        let selectedMenus = [];
+                        let selectedSections = [];
+                        document.querySelectorAll('.menu-checkbox:checked').forEach(function(checkbox) {
+                            selectedMenus.push(checkbox.value);
+                        });
+                        document.querySelectorAll('.section-checkbox:checked').forEach(function(checkbox) {
+                            selectedSections.push(checkbox.value);
+                        });
+                        // Gửi yêu cầu POST đến route để thêm các menu đã chọn vào bảng trung gian
+                        fetch('{{ route("addSelectedMenusToIntermediateTable") }}', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: JSON.stringify({
+                                    page_id: '{{ $page->id }}',
+                                    menu_id: selectedMenus,
+                                    session_id: selectedSections
+
+                                })
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    return response.json();
+                                }
+                                throw new Error('Network response was not ok.');
+                            })
+                            .then(data => {
+                                // Xử lý dữ liệu trả về (nếu cần)
+                                console.log(data);
+                                document.getElementById('notification').classList.add('alert-success');
+                                document.getElementById('notification').textContent = 'Selected menus added to intermediate table successfully.';
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                document.getElementById('notification').classList.add('alert-danger');
+                                document.getElementById('notification').textContent = 'Failed to add selected menus to intermediate table.';
                             });
-                        </script>
-                    </div>
-                </li>
-                @endguest
-            </ul>
-        </ul>
-    </div>
-    <div class="notification alert" id="notification"></div>
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        @auth
-            document.querySelectorAll('.edit-button').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    const navLink = this.previousElementSibling;
-                    navLink.contentEditable = true;
-                    navLink.focus();
+                    });
+
                 });
-            });
-        @endauth
-        @guest
-            document.querySelectorAll('.editable').forEach(function(element) {
-                element.setAttribute('contenteditable', 'false');
-            });
-            document.querySelectorAll('.edit-button').forEach(function(button) {
-                button.style.display = 'none';
-            });
-        @endguest
-    });
-</script>
+            </script>
+            <script>
+                document.getElementById('logout-link').addEventListener('click', function(event) {
+                    event.preventDefault();
+                    document.getElementById('logout-form').submit();
+                });
+            </script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    @auth
+                    document.querySelectorAll('.edit-button').forEach(function(button) {
+                        button.addEventListener('click', function() {
+                            const navLink = this.previousElementSibling;
+                            navLink.contentEditable = true;
+                            navLink.focus();
+                        });
+                    });
+                    @endauth
+                    @guest
+                    document.querySelectorAll('.editable').forEach(function(element) {
+                        element.setAttribute('contenteditable', 'false');
+                    });
+                    document.querySelectorAll('.edit-button').forEach(function(button) {
+                        button.style.display = 'none';
+                    });
+                    @endguest
+                });
+            </script>
     </nav>
     <script>
         $(document).ready(function() {
@@ -197,7 +268,10 @@
         </div>
     </header>
     @foreach ($sections as $section)
-    @include($section->filename)
+    <div>
+        <input type="checkbox" name="sections[]" value="{{ $section->id }}" class="section-checkbox">
+        @include($section->filename)
+    </div>
     @endforeach
     <!-- Footer-->
     <footer class="footer py-4">
@@ -222,4 +296,5 @@
     <script src="<?php echo e(asset('user/js/scripts.js')); ?>"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
+
 </html>

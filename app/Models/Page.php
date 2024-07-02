@@ -17,17 +17,15 @@ class Page extends Model
         'name',
         'domain',
         'logo',
-        'session_id',
-        'menu_id',
         'user_id',
     ];
-    protected $table = 'menus';
+    protected $table = 'pages';
     public function menus()
     {
-        return $this->belongsToMany(Menu::class, 'menus_page');
+        return $this->belongsToMany(Menu::class, 'menu_page', 'page_id', 'menu_id');
     }
-    public function sessions()
+    public function sections()
     {
-        return $this->belongsToMany(Section::class, 'section_page');
+        return $this->belongsToMany(Section::class, 'session_page', 'page_id', 'session_page_id');
     }
 }

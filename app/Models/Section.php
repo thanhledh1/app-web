@@ -42,8 +42,8 @@ class Section extends Model
     ];
     protected $table = 'sessions';
 
-    public function sessions()
+    public function pages()
     {
-        return $this->belongsToMany(Page::class, 'section_page');
+        return $this->belongsToMany(Page::class);
     }
 }

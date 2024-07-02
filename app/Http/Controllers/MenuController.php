@@ -71,4 +71,7 @@ class MenuController extends Controller
         $menu = Menu::find($id);
         return view('menu.show', compact('menu'));
     }
+
+    
+
 }

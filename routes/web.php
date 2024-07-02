@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/postlogin', [AuthController::class, 'postlogin'])->name('postlogin');
 Route::post('/admin/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/create', [UserController::class, 'create'])->name('user.create');
@@ -36,13 +37,21 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update-image', [SectionController::class, 'updateImage'])->name('update.image');
     Route::post('/update-image-about', [SectionController::class, 'updateImageAbout'])->name('update.image1');
     Route::post('/update-image-team', [SectionController::class, 'updateImageTeam'])->name('update.image2');
+     // Page
+    Route::resource('page', PageController::class);
+
+    
+    Route::get('/createweb', [MasterController::class, 'index'])->name('master.index');
 });
 
 // Master
-    Route::get('/', [MasterController::class, 'index'])->name('master.index');
     Route::post('master/{id}', [MasterController::class, 'update'])->name('menu.update');
 
     Route::get('/masteradmin', function () {
         return view('masteradmin');
     });
     
+    Route::post('/add-selected-menus-to-intermediate-table', [MasterController::class, 'addSelectedMenusToIntermediateTable'])->name('addSelectedMenusToIntermediateTable');
+
+
+
