@@ -27,13 +27,20 @@ class MasterController extends Controller
     //     return view('master', compact('pages', 'menus', 'sections'));
     // }
 
-    public function index()
+    public function index( Request $request)
     {
         $page = Page::where('user_id', Auth::id())->latest('created_at')->first(); // Lấy trang mới nhất theo created_at
         $sections = Section::all();
         $menus = Menu::orderBy('position')->get();
         // dd($latestPage,$menus,$sections);
-        return view('master', compact('page', 'menus', 'sections'));
+        // return view('master', compact('page', 'menus', 'sections'));
+        if ($request->session()->has('success')) {
+            // Hiển thị view của MasterController@index
+            return view('master', compact('page', 'menus', 'sections'));
+        } else {
+            // Nếu không có session 'success', chuyển hướng hoặc xử lý theo yêu cầu
+            return redirect()->route('page.index'); // Ví dụ chuyển hướng về route 'home'
+        }
     }
 
 
@@ -56,21 +63,6 @@ class MasterController extends Controller
         }
         return response()->json(['success' => true]);
     }
-    public function addToIntermediateTable(Request $request)
-    {
-        $page_id = $request->input('page_id');
-        $menu_id = $request->input('menu_id');
-
-        // Thêm vào bảng trung gian
-        DB::table('menus_page')->insert([
-            'page_id' => $page_id,
-            'menu_id' => $menu_id,
-        ]);
-
-        // Trả về thông báo thành công
-        return redirect()->back()->with('success', 'Added to intermediate table successfully.');
-    }
-
 
     public function addSelectedMenusToIntermediateTable(Request $request)
     {
@@ -103,7 +95,7 @@ class MasterController extends Controller
             DB::commit();
 
             // Trả về thông báo thành công (nếu cần)
-            return response()->json(['message' => 'Selected menus added to intermediate table successfully.']);
+            return redirect()->route('login')->with('success', 'Sign Up Success!');
         } catch (\Exception $e) {
             // Rollback transaction nếu có lỗi
             DB::rollback();

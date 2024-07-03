@@ -23,10 +23,9 @@ class Menu extends Model
     ];
     protected $table = 'menus';
 
- 
     public function pages()
     {
-        return $this->belongsToMany(Page::class);
+        return $this->belongsToMany(Page::class, 'menus_page', 'menu_id', 'page_id');
     }
 
 }

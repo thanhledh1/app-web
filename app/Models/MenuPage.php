@@ -13,7 +13,7 @@ class MenuPage extends Model
         'page_id',
 
      ];
-     public function menu()
+     public function menus()
      {
          return $this->belongsTo(Menu::class,'menu_id','id');
      }

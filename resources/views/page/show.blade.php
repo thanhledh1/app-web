@@ -1,43 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-@extends('masteradmin')
-@section('content')
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-        img {
-            border: 1px solid #ddd;
-            border-radius: 2px;
-            padding: 2px;
-            width: 50px;
-        }
-        td,
-        th {
-            text-align: center;
-        }
-
-        .modal-dialog {
-            max-width: 20%;
-            /* Tăng kích thước của modal */
-        }
-
-        .modal-body img {
-            width: 110%;
-            /* Hình ảnh chiếm toàn bộ chiều rộng modal */
-            height: auto;
-            /* Giữ nguyên tỉ lệ của hình ảnh */
-        }
-    </style>
 </head>
 
 <body>
+    @extends('masteradmin')
+    @section('content')
     <div class="content-wrapper">
-        <h2>Detail</h2>
+        <h2>Detail Page</h2>
         <div class="row">
             <div class="col-lg-6">
 
@@ -52,18 +26,43 @@
                     <tbody>
                         <tr>
                             <td>Name</td>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $page->name }}</td>
                         </tr>
 
                         <tr>
-                            <td>Email</td>
-                            <td>{{ $user->email }}</td>
+                            <td>Domain</td>
+                            <td>{{ $page->domain }}</td>
                         </tr>
-                        <td>Image</td>
+                        <td>Logo</td>
                         <td>
-                            <img src="{{ asset('admin/uploads/user/' . $user->image) }}" alt="User Image" style="cursor: pointer;" data-toggle="modal" data-target="#imageModal" onclick="showImageModal(this)">
+                            <img src="{{ asset('admin/uploads/logo/' . $page->logo) }}" alt="User Image" style="cursor: pointer;" data-toggle="modal" data-target="#imageModal" onclick="showImageModal(this)">
                         </td>
                         </tr>
+
+                        <tr>
+                            <td>Created By</td>
+                            <td>{{ $page->user->name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Menu</td>
+                            <td>
+                                <ul>
+                                    @foreach ($page->menus as $menu)
+                                    <li>{{ $menu->title }}</li>
+                                    @endforeach
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                <td>Sessions</td>
+                <td>
+                    <ul>
+                        @foreach ($page->sessions as $session)
+                            <li>{{ $session->name }}</li>
+                        @endforeach
+                    </ul>
+                </td>
+            </tr>
                     </tbody>
                 </table>
             </div>
@@ -97,6 +96,6 @@
         }
     </script>
 </body>
+@endsection
 
 </html>
-@endsection

@@ -20,12 +20,17 @@ class Page extends Model
         'user_id',
     ];
     protected $table = 'pages';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function menus()
     {
-        return $this->belongsToMany(Menu::class, 'menu_page', 'page_id', 'menu_id');
+        return $this->belongsToMany(Menu::class, 'menus_page', 'page_id', 'menu_id');
     }
-    public function sections()
+    public function sessions()
     {
-        return $this->belongsToMany(Section::class, 'session_page', 'page_id', 'session_page_id');
+        return $this->belongsToMany(Section::class, 'section_page', 'page_id', 'session_id');
     }
 }

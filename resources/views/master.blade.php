@@ -110,7 +110,7 @@
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    // Xử lý khi nhấn nút "Add Selected Menus to Intermediate Table"
+                    // Xử lý khi nhấn nút "Create WEb"
                     document.getElementById('add-selected-menus-form').addEventListener('submit', function(event) {
                         event.preventDefault();
 
@@ -147,7 +147,9 @@
                                 console.log(data);
                                 document.getElementById('notification').classList.add('alert-success');
                                 document.getElementById('notification').textContent = 'Selected menus added to intermediate table successfully.';
+                                window.location.href = '/page';
                             })
+                      
                             .catch(error => {
                                 console.error('Error:', error);
                                 document.getElementById('notification').classList.add('alert-danger');

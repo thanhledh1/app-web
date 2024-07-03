@@ -24,7 +24,7 @@ class AuthController extends Controller
 
     if (Auth::attempt($credentials)) {
         // Email và mật khẩu hợp lệ
-        return redirect()->route('master.index')->with('success', 'Logged in successfully!');
+        return redirect()->route('page.create')->with('success', 'Logged in successfully!');
     } else {
         // Email hoặc mật khẩu không hợp lệ
         return back()->withErrors([

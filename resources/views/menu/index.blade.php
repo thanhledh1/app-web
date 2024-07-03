@@ -28,7 +28,6 @@
 
 <body>
     <h4 class="card-title">Menu Table</h4>
-
     <div class="container-fluid">
         <table class="table table-bordered" style="border-collapse: collapse; width: 100%;">
             <thead class="thead-light">

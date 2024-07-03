@@ -100,7 +100,6 @@
     <script src="{{ asset('admin/js/shared/misc.js')}}"></script>
     <!-- endinject -->
     <!-- Custom js for this page-->
-    <script src="{{ asset('admin/js/shared/jquery.cookie.js')}}" type="text/javascript"></script>
     <!-- End custom js for this page-->
   </body>
 </html>

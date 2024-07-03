@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
         return view('masteradmin');
     });
     
-    Route::post('/add-selected-menus-to-intermediate-table', [MasterController::class, 'addSelectedMenusToIntermediateTable'])->name('addSelectedMenusToIntermediateTable');
+    // Route::post('/add-selected-menus-to-intermediate-table', [MasterController::class, 'addSelectedMenusToIntermediateTable'])->name('addSelectedMenusToIntermediateTable');
 
 
 
