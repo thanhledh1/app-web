@@ -2,17 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Menu extends Model
 {
-    use HasFactory;
-    protected $dates = [
-        'delete_at',
-        'created_at',
-        'updated_at',
-    ];
+  
     protected $fillable = [
         'title',
         'url',
@@ -21,9 +16,8 @@ class Menu extends Model
         'parent_id',
 
     ];
-    protected $table = 'menus';
 
-    public function pages()
+    public function pages(): BelongsToMany
     {
         return $this->belongsToMany(Page::class, 'menus_page', 'menu_id', 'page_id');
     }

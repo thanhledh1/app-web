@@ -14,24 +14,34 @@
         <h2>Create New Page</h2>
         <div class="row">
             <div class="col-lg-6">
-            <form action="{{ route('page.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <form action="{{ route('page.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                        @error('name')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="domain">Domain:</label>
+                        <input type="text" class="form-control" id="domain" name="domain" value="{{ old('domain') }}">
+                        @error('domain')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Logo:</label>
+                        <input type="file" class="form-control-file" id="logo" name="logo" value="{{ old('logo') }}">
+                        @error('logo')
+                        <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="domain">Domain:</label>
-                <input type="text" class="form-control" id="domain" name="domain" required>
-            </div>
-            <div class="form-group">
-                <label for="image">Logo:</label>
-                <input type="file" class="form-control-file" id="logo" name="logo">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-            </div>
+        </div>
     </div>
 </body>
 

@@ -33,7 +33,7 @@
     <h4 class="card-title">Users Table</h4>
     <div class="container-fluid">
 
-        <table class="table table-striped" style=" border-collapse: collapse;
+        <table class="table table-bordered" style=" border-collapse: collapse;
   width: 100%;">
             <thead class="thead-light">
                 <tr style="text-align: center;">

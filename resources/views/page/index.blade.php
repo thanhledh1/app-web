@@ -11,6 +11,8 @@
     @section('content')
     <h4 class="card-title">LIST WEB</h4>
     <div class="container-fluid">
+        <a href="{{ route('page.create')}}"  class="btn btn-inverse-success btn-fw">+</a> 
+
         <table class="table table-bordered" style="border-collapse: collapse; width: 100%;">
             <thead class="thead-light">
                 <tr style="text-align: center;">

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SectionPage extends Model
 {
-    use HasFactory;
     protected $fillable = [
         'page_id',
         'session_id',

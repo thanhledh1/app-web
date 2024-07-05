@@ -39,6 +39,12 @@
             height: 40px;
             margin-bottom: 10px;
         }
+
+        .mt-3 {
+            margin-left: 63rem !important;
+        }
+
+        ;
     </style>
 </head>
 
@@ -46,7 +52,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="#page-top"><img src="<?php echo e(asset('user/assets/img/navbar-logo.svg')); ?>" alt="..." /></a>
+            <a class="navbar-brand" href="#page-top"><img style="height: 8rem;" src="{{ asset('admin/uploads/logo/'.$page->logo) }}" alt="..." /></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars ms-1"></i>
@@ -65,34 +71,7 @@
                             @endauth
                         </li>
                         @endforeach
-                        <ul class="navbar-nav ms-auto">
-                            @guest
-                            <li class="nav-item"><a class="btn btn-outline-warning" href="{{ route('user.create') }}">SIGN UP</a></li>
-                            <li class="nav-item"><a class="btn btn-outline-warning" href="{{ route('login') }}">LOG IN</a></li>
-                            @else
-                            <li class="nav-item nav-profile dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                                    <span class="text-uppercase nav-profile-name">Hello {{ Auth::user()->name }}</span>
-                                    <!-- <img style=" width: 25%; height: 25px;" src="{{ asset('admin/uploads/user/'.Auth::user()->image) }}" alt="profile" /> -->
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                                    <a id="logout-link" class="dropdown-item" href="#">
-                                        <i class="mdi mdi-logout text-primary"></i>
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                    <script>
-                                        document.getElementById('logout-link').addEventListener('click', function(event) {
-                                            event.preventDefault();
-                                            document.getElementById('logout-form').submit();
-                                        });
-                                    </script>
-                                </div>
-                            </li>
-                            @endguest
-                        </ul>
+                      
                     </ul>
 
                 </div>
@@ -149,7 +128,7 @@
                                 document.getElementById('notification').textContent = 'Selected menus added to intermediate table successfully.';
                                 window.location.href = '/page';
                             })
-                      
+
                             .catch(error => {
                                 console.error('Error:', error);
                                 document.getElementById('notification').classList.add('alert-danger');
@@ -159,12 +138,7 @@
 
                 });
             </script>
-            <script>
-                document.getElementById('logout-link').addEventListener('click', function(event) {
-                    event.preventDefault();
-                    document.getElementById('logout-form').submit();
-                });
-            </script>
+           
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     @auth
@@ -271,7 +245,7 @@
     </header>
     @foreach ($sections as $section)
     <div>
-        <input type="checkbox" name="sections[]" value="{{ $section->id }}" class="section-checkbox">
+        <input type="checkbox" style="width: 40px;height: 40px" name="sections[]" value="{{ $section->id }}" class="section-checkbox">
         @include($section->filename)
     </div>
     @endforeach

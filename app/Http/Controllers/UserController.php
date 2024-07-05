@@ -3,19 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
-use App\Models\User;
-use Illuminate\Support\Facades\Log;
+use App\Http\Services\UserService;
 use Illuminate\Http\Request;
 
 
 class UserController extends Controller
 {
-    /**
-     * Show the profile for a given user.
-     */
+    public UserService $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
+
     public function index()
     {
-        $users = User::paginate(7);
+        $users =  $this->userService->index();
         return view('user.index', compact('users'));
     }
 
@@ -26,67 +30,31 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $file = $request->image;
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $path = 'admin/uploads/user';
-            $newImageName = $image->getClientOriginalName();
-            $newImageName = pathinfo($newImageName, PATHINFO_FILENAME) . '_' . time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path($path), $newImageName);
-            $user->image = $newImageName;
-        }
-        $user->save();
+         $this->userService->store($request);
         return redirect()->route('login')->with('success', 'Sign Up Success!');
     }
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->userService->findOrFail($id);
         return view('user.edit', compact('user'));
     }
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $this->userService->destroy($id);
         return redirect()->route('users.index');
     }
 
-
-
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-
-        $get_image = $request->image;
-        if ($get_image) {
-            $path = 'admin/uploads/user/' . $user->image; // Fixed the directory separator
-            if (file_exists($path)) {
-                unlink($path);
-            }
-            $path = 'admin/uploads/user'; // Fixed the directory separator
-            $get_name_image = $get_image->getClientOriginalName();
-            $name_image = current(explode('.', $get_name_image));
-            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
-            $get_image->move($path, $new_image);
-            $user->image = $new_image;
-        }
-
-        $user->save();
+      $this->userService->update($request, $id);
         return redirect()->route('users.index')->with('success', 'Sửa thành công!');
     }
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = $this->userService->show($id);
         return view('user.show', compact('user'));
     }
 }
