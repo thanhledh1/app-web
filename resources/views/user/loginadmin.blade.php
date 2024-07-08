@@ -56,7 +56,7 @@
                             </div>
 
                             <div>
-                                <p class="mb-0">Don't have an account? <a  href="{{ route('user.create') }}" class="text-white-50 fw-bold">Sign Up</a>
+                                <p class="mb-0">Don't have an account? <a  href="{{ route('users.create') }}" class="text-white-50 fw-bold">Sign Up</a>
                                 </p>
                             </div>
 
@@ -73,7 +73,7 @@
                 @if (session('success'))
                     Swal.fire({
                         icon: 'success',
-                        title: '{{ session('success') }}',
+                        title: '{{ session("success") }}',
                         showConfirmButton: false,
                         timer: 2000
                     });

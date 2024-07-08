@@ -51,6 +51,8 @@ class PageController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->pageService->update($request,$id);
+
         return redirect()->route('page.index')->with('success', 'Sửa thành công!');
     }
 

@@ -2,39 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use Dotenv\Validator;
+use App\Http\Services\AuthService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+
+    public AuthService $authService;
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
+
     public function login()
     {
         return view('user.loginadmin');
     }
-
     public function postLogin(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $result = $this->authService->login($request);
 
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            // Email và mật khẩu hợp lệ
+        if ($result['success']) {
             return redirect()->route('page.create')->with('success', 'Logged in successfully!');
         } else {
-            // Email hoặc mật khẩu không hợp lệ
             return back()->withErrors([
-                'email' => 'Email or password is invalid.',
+                'email' => $result['message'],
             ])->withInput();
         }
     }
     public function logout()
     {
-        Auth::logout();
+        $this->authService->logout();
         return redirect()->route('login');
     }
 }

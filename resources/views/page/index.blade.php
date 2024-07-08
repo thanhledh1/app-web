@@ -39,9 +39,9 @@
                         <form action="{{ route('page.destroy', $page->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger">DELETE</button>
+                            <button type="submit" class="btn btn-outline-danger" onclick="confirmDelete()">DELETE</button>
+                            <a href="{{ route('page.edit', [$page->id]) }}" class="btn btn-outline-primary ">UPDATE</a>
                             <a href="{{ route('page.show', [$page->id]) }}" class="btn btn-outline-info">SHOW</a>
-
                         </form>
                     </td>
                 </tr>
@@ -53,6 +53,14 @@
     {{ $pages->links('pagination::bootstrap-5') }}
 
     @endsection
+
+    <script>
+        function confirmDelete() {
+            if (confirm('Bạn có chắc chắn muốn xóa?')) {
+                document.getElementById('deleteForm').submit();
+            }
+        }
+    </script>
 
 </body>
 </html>

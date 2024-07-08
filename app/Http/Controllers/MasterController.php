@@ -31,7 +31,7 @@ class MasterController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function updateMenu(Request $request, $id)
     {
         $menu = $this->masterpageService->updateMenu($request, $id);
         return response()->json(['success' => 'Menu item updated successfully.', 'menu' => $menu]);

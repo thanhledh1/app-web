@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MenuPage extends Model
 {
@@ -11,7 +12,7 @@ class MenuPage extends Model
         'page_id',
 
      ];
-     public function menus()
+     public function menus(): BelongsTo
      {
          return $this->belongsTo(Menu::class,'menu_id','id');
      }

@@ -26,7 +26,7 @@
                       </div>
                       <div class="form-group col-md-8 ">
                         <label for="exampleInputEmail3">URL</label>
-                        <input type="email" class="form-control" id="url" name="url" value="{{ $menu->url }}">
+                        <input type="text" class="form-control" id="url" name="url" value="{{ $menu->url }}">
                       </div>
                       <div class="form-group col-md-8 ">
                         <label for="exampleInputPassword4">Position</label>

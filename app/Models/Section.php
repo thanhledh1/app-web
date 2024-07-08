@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Section extends Model
 {
@@ -36,7 +37,7 @@ class Section extends Model
     ];
     protected $table = 'sessions';
 
-    public function pages()
+    public function pages():BelongsToMany
     {
         return $this->belongsToMany(Page::class, 'section_page', 'session_id', 'page_id');
     }

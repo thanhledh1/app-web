@@ -21,13 +21,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-
 Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/post-login', [AuthController::class, 'postlogin'])->name('postlogin');
+Route::post('/admin-logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::post('/postlogin', [AuthController::class, 'postlogin'])->name('postlogin');
-Route::post('/admin/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/create', [UserController::class, 'create'])->name('user.create');
-Route::post('/store', [UserController::class, 'store'])->name('user.store');
 
 Route::middleware(['auth'])->group(function () {
     // User
@@ -49,13 +46,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Master
-    Route::post('master/{id}', [MasterController::class, 'update'])->name('menu.update');
+    Route::post('master/{id}', [MasterController::class, 'updateMenu'])->name('updateMenu');
 
-    Route::get('/masteradmin', function () {
+    Route::get('/master-admin', function () {
         return view('masteradmin');
     });
     
-    // Route::post('/add-selected-menus-to-intermediate-table', [MasterController::class, 'addSelectedMenusToIntermediateTable'])->name('addSelectedMenusToIntermediateTable');
-
-
-
