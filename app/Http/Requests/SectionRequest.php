@@ -4,11 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PageRequest extends FormRequest
+class SectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
+  
 
     /**
      * Get the validation rules that apply to the request.
@@ -18,24 +19,18 @@ class PageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'domain' => [
-                'required',
-                'unique:pages,domain',
-                'regex:/^(?!:\/\/)(?=.{1,255}$)[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[A-Za-z]{2,})+$/'
-            ],
             'name' => 'required',
-            'logo' => 'required',
+            'filename' => 'required',
+            'cos'=>'required|unique:sessions,cos',
+
         ];
     }
     public function messages()
     {
         return [
             'name.required' => 'Not be empty',
-            'domain.required' => 'Not be empty',
-            'domain.regex' => 'invalid domain',
-
-            'domain.unique' => 'domain already exists',
-            'logo.required' => '  Not be empty',
+            'filename.required' => 'required',
+          
         ];
     }
 }

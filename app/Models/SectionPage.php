@@ -13,6 +13,7 @@ class SectionPage extends Model
         'session_id',
 
      ];
+     protected $table = 'section_page'; // Tên bảng trong cơ sở dữ liệu
      public function section(): BelongsTo
      {
          return $this->belongsTo(Section::class,'session_id','id');

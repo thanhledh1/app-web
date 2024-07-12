@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Http\Services\UserService;
-use Illuminate\Http\Request;
 
 
 class UserController extends Controller
@@ -17,7 +16,7 @@ class UserController extends Controller
     }
 
 
-    public function index()
+    public function index() 
     {
         $users =  $this->userService->index();
         return view('user.index', compact('users'));
@@ -46,7 +45,7 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
       $this->userService->update($request, $id);
         return redirect()->route('users.index')->with('success', 'Sửa thành công!');

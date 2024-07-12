@@ -44,7 +44,6 @@
     </div>
     </div>
 </section>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         @guest

@@ -23,12 +23,9 @@ class MasterController extends Controller
         $menus = $this->masterpageService->menuOderBy();
 
         if ($request->session()->has('success')) {
-            // Hiển thị view của MasterController@index
             return view('master', compact('page', 'menus', 'sections'));
-        } else {
-            // Nếu không có session 'success', chuyển hướng hoặc xử lý theo yêu cầu
-            return redirect()->route('page.index'); // Ví dụ chuyển hướng về route 'home'
-        }
+        } 
+            return redirect()->route('page.index'); 
     }
 
     public function updateMenu(Request $request, $id)
@@ -42,16 +39,5 @@ class MasterController extends Controller
     {
         $this->masterpageService->updateMenuOrder($request);
         return response()->json(['success' => true]);
-    }
-
-    public function addSelectedMenusToIntermediateTable(Request $request)
-    {
-        $result = $this->masterpageService->addSelectedMenusAndSections($request);
-
-        if ($result) {
-            return redirect()->route('login')->with('success', 'Sign Up Success!');
-        } else {
-            return response()->json(['message' => 'Failed to add selected menus to intermediate table.'], 500);
-        }
     }
 }

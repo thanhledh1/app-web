@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Http\Requests\SectionRequest;
 use App\Models\Section;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class SectionService
     {
         return Section::all();
     }
-    public function findOrFail($id)
+    public function findOrFail($id):Section
     {
         return Section::findOrFail($id);
     }
@@ -21,44 +22,41 @@ class SectionService
         $section->delete();
     }
 
-    public function store(Request $request)
+    public function store(SectionRequest $request)
     {
-        $section = new Section();
-        $section->name = $request->name;
-        $section->filename = $request->filename;
-        $section->cos = $request->cos; // COS
-        $section->text_1 = $request->text_1;
-        $section->text_2 = $request->text_2;
-        $section->text_3 = $request->text_3;
-        $section->text_4 = $request->text_4;
-        $section->text_5 = $request->text_5;
-        $section->text_6 = $request->text_6;
-        $section->text_7 = $request->text_7;
-        $section->text_8 = $request->text_8;
-        $section->text_9 = $request->text_9;
-        $section->text_10 = $request->text_10;
+        $validatedData = $request->validated();
         // Array of image columns in the database
-        $imageColumns = ['image_1', 'image_2', 'image_3', 'image_4', 'image_5', 'image_6', 'image_7', 'image_8']; // Add more columns as needed
+        $imageColumns = [
+            'image_1', 'image_2', 'image_3', 'image_4',
+            'image_5', 'image_6', 'image_7', 'image_8'
+        ];
+
         $path = 'admin/uploads/section';
+
         foreach ($imageColumns as $imageColumn) {
             if ($request->hasFile($imageColumn)) {
                 $image = $request->file($imageColumn);
                 $newImageName = $image->getClientOriginalName();
                 $newImageName = pathinfo($newImageName, PATHINFO_FILENAME) . '_' . time() . '.' . $image->getClientOriginalExtension();
                 $image->move(public_path($path), $newImageName);
-                $section->$imageColumn = $newImageName;
+                $validatedData[$imageColumn] = $newImageName;
             }
         }
-        $section->save();
-        return $section;
+
+        // Tạo một đối tượng Section mới bằng phương thức create
+        $section = Section::create($validatedData);
+
+        return response()->json($section, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(SectionRequest $request, $id)
     {
-        $section = section::find($id);
-        $section->name = $request->name;
-        $section->html_content = $request->html_content;
-        $section->save();
+        $section = Section::findOrFail($id); 
+        // Lấy dữ liệu hợp lệ từ Request
+        $validatedData = $request->validated();
+       
+        $section->update($validatedData);
+        return response()->json($section, 200); 
     }
 
     public function updateServices(Request $request)

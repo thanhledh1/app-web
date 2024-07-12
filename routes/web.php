@@ -22,33 +22,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/post-login', [AuthController::class, 'postlogin'])->name('postlogin');
-Route::post('/admin-logout', [AuthController::class, 'logout'])->name('logout');
-
-
+Route::post('/login', [AuthController::class, 'postlogin'])->name('postlogin');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// 
 Route::middleware(['auth'])->group(function () {
-    // User
     Route::resource('users', UserController::class);
-    // Menu
     Route::resource('menu', MenuController::class);
-    Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
-    //section
     Route::resource('section', SectionController::class);
+    Route::resource('page', PageController::class);
+
+// update menu, secion in view
+    Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
     Route::post('/update-services', [SectionController::class, 'updateServices'])->name('section.updateService');
     Route::post('/update-image', [SectionController::class, 'updateImage'])->name('update.image');
     Route::post('/update-image-about', [SectionController::class, 'updateImageAbout'])->name('update.image1');
     Route::post('/update-image-team', [SectionController::class, 'updateImageTeam'])->name('update.image2');
-     // Page
-    Route::resource('page', PageController::class);
-
-    
+    Route::post('master/{id}', [MasterController::class, 'updateMenu'])->name('updateMenu');
+     // Create view
     Route::get('/create-web', [MasterController::class, 'index'])->name('master.index');
 });
-
-// Master
-    Route::post('master/{id}', [MasterController::class, 'updateMenu'])->name('updateMenu');
-
-    Route::get('/master-admin', function () {
-        return view('masteradmin');
-    });
+    Route::get('/error', function () {
+        return view('errors');
+    })->name('error.page');
     

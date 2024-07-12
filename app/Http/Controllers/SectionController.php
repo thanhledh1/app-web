@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SectionRequest;
 use App\Http\Services\SectionService;
 use Illuminate\Http\Request;
 
@@ -39,13 +40,13 @@ class SectionController extends Controller
         return redirect()->route('section.index');
     }
 
-    public function store(Request $request)
+    public function store(SectionRequest $request)
     {
         $this->sectionService->store($request);
         return redirect()->route('section.index');
     }
 
-    public function update(Request $request, $id)
+    public function update(SectionRequest $request, $id)
     {
         $this->sectionService->update($request, $id);
         return redirect()->route('section.index')->with('success', 'Sửa thành công!');

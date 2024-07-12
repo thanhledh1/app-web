@@ -16,7 +16,6 @@
             padding: 2px;
             width: 50px;
         }
-
         td,
         th {
             text-align: center;
@@ -30,8 +29,7 @@
 <h4 class="card-title">Section Table</h4>
 
     <div class="container-fluid">
-        <table class="table table-bordered" style=" border-collapse: collapse;
-  width: 100%;">
+        <table class="table table-bordered" style=" border-collapse: collapse; width: 100%;">
             <thead class="thead-light">
                 <tr style="text-align: center;">
                     <th scope="col">Id</th>
@@ -39,8 +37,6 @@
                     <th scope="col">File Name</th>
                     <th scope="col">COS</th>
                     <th scope="col">Action</th>
-
-
                 </tr>
             </thead>
             <tbody>

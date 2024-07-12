@@ -19,17 +19,18 @@ class AuthController extends Controller
     {
         return view('user.loginadmin');
     }
+
     public function postLogin(Request $request)
     {
         $result = $this->authService->login($request);
 
         if ($result['success']) {
             return redirect()->route('page.create')->with('success', 'Logged in successfully!');
-        } else {
-            return back()->withErrors([
-                'email' => $result['message'],
-            ])->withInput();
         }
+        return back()->withErrors([
+            'email' => $result['message'],
+        ])
+            ->withInput();
     }
     public function logout()
     {

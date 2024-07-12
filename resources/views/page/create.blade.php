@@ -30,19 +30,37 @@
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                   
                     <div class="form-group">
-                        <label for="image">Logo:</label>
-                        <input type="file" class="form-control-file" id="logo" name="logo" value="{{ old('logo') }}">
+                        <label for="name">Logo:</label>
+                        <input class="form-control file-upload-default" type="file" id="logo" name="logo" value="{{ old('logo') }}">
+                        <div class="input-group col-xs-12 mt-2">
+                            <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                            </span>
+                        </div>
                         @error('logo')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
-                    
                     <button type="submit" class="btn btn-primary">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        document.querySelector('.file-upload-browse').addEventListener('click', function() {
+            var fileInput = document.querySelector('.file-upload-default');
+            fileInput.click();
+        });
+    
+        document.querySelector('.file-upload-default').addEventListener('change', function() {
+            var fileName = this.value.split('\\').pop();
+            document.querySelector('.file-upload-info').value = fileName;
+        });
+    </script>
 </body>
 
 </html>

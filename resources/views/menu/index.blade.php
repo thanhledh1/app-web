@@ -11,6 +11,9 @@
     <!-- Bao gồm thư viện SweetAlert2 và jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <style>
         img {
             border: 1px solid #ddd;
@@ -58,7 +61,7 @@
                         <form action="{{ route('menu.destroy', $menu->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger">DELETE</button>
+                            <button type="submit" class="btn btn-outline-danger"  onclick="confirmDelete()">DELETE</button>
                             <a href="{{ route('menu.edit', [$menu->id]) }}" class="btn btn-outline-primary">UPDATE</a>
                             <a href="{{ route('menu.show', [$menu->id]) }}" class="btn btn-outline-info">SHOW</a>
 
@@ -71,11 +74,7 @@
 
     </div>
     {{ $menus->links('pagination::bootstrap-5') }}
-
     @if (session('success'))
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script>
         $(document).ready(function() {
             @if(session('success'))
@@ -90,7 +89,13 @@
         });
     </script>
     @endif
+    <script>
+        function confirmDelete() {
+            if (confirm('Bạn có chắc chắn muốn xóa?')) {
+                document.getElementById('deleteForm').submit();
+            }
+        }
+    </script>
 </body>
-
 </html>
 @endsection

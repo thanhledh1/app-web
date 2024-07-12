@@ -2,13 +2,14 @@
 
 namespace App\Http\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 
 class AuthService
 {
-    public function login(Request $request)
+    public function login(Request $request) 
     {
         $request->validate([
             'email' => 'required|email',
@@ -20,10 +21,10 @@ class AuthService
         if (Auth::attempt($credentials)) {
             // Email và mật khẩu hợp lệ
             return ['success' => true];
-        } else {
+        }  
             // Email hoặc mật khẩu không hợp lệ
             return ['success' => false, 'message' => 'Email or password is invalid.'];
-        }
+        
     }
     public function logout()
     {

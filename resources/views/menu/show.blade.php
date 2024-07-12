@@ -15,7 +15,6 @@
             padding: 2px;
             width: 50px;
         }
-
         td,
         th {
             text-align: center;

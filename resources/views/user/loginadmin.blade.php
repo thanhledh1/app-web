@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         .gradient-custom {
@@ -37,14 +40,14 @@
                                         <input type="email" id="typeEmailX" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" />
                                         <label class="form-label" for="typeEmailX">Email</label>
                                         @error('email')
-                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline form-white mb-4">
                                         <input type="password" id="typePasswordX" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" />
                                         <label class="form-label" for="typePasswordX">Password</label>
-                                       
+
                                     </div>
                                     <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
                                 </form>
@@ -56,7 +59,7 @@
                             </div>
 
                             <div>
-                                <p class="mb-0">Don't have an account? <a  href="{{ route('users.create') }}" class="text-white-50 fw-bold">Sign Up</a>
+                                <p class="mb-0">Don't have an account? <a href="{{ route('users.create') }}" class="text-white-50 fw-bold">Sign Up</a>
                                 </p>
                             </div>
 
@@ -65,18 +68,16 @@
                 </div>
             </div>
         </div>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
         <script>
             $(document).ready(function() {
-                @if (session('success'))
-                    Swal.fire({
-                        icon: 'success',
-                        title: '{{ session("success") }}',
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
+                @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: '{{ session("success") }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
                 @endif
             });
         </script>

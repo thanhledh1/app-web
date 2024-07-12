@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PageRequest;
 use App\Http\Services\PageService;
+use App\Models\Page;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -27,14 +28,13 @@ class PageController extends Controller
         return view('page.create');
     }
 
-    public function store(PageRequest $request)
+    public function store(PageRequest $request) 
     {
         $page = $this->pageService->store($request);
         if ($page) {
             return redirect()->route('master.index')->with('success', 'Page created successfully!');
-        } else {
+        } 
             return back()->withInput()->with('error', 'Failed to create page.');
-        }
     }
 
     public function edit($id)

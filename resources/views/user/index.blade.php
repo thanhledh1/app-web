@@ -28,13 +28,10 @@
 </head>
 @extends('masteradmin')
 @section('content')
-
 <body>
     <h4 class="card-title">Users Table</h4>
     <div class="container-fluid">
-
-        <table class="table table-bordered" style=" border-collapse: collapse;
-  width: 100%;">
+        <table class="table table-bordered" style=" border-collapse: collapse; width: 100%;">
             <thead class="thead-light">
                 <tr style="text-align: center;">
                     <th scope="col">id</th>
@@ -42,7 +39,6 @@
                     <th scope="col">Email</th>
                     <th scope="col">Image</th>
                     <th scope="col">Action</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +55,6 @@
                             <button type="submit" class="btn btn-outline-danger" onclick="confirmDelete()">DELETE</button>
                             <a href="{{ route('users.edit', [$user->id]) }}" class="btn btn-outline-primary ">UPDATE</a>
                             <a href="{{ route('users.show', [$user->id]) }}" class="btn btn-outline-info">SHOW</a>
-
                         </form>
                     </td>
                 </tr>
@@ -83,7 +78,6 @@
         });
     </script>
     @endif
-
     <script>
         function confirmDelete() {
             if (confirm('Bạn có chắc chắn muốn xóa?')) {
@@ -92,6 +86,5 @@
         }
     </script>
 </body>
-
 </html>
 @endsection

@@ -26,11 +26,18 @@ class MenuController extends Controller
         return view('menu.create');
     }
 
+    // public function edit(Menu $menu)
+    // {
+    //     $menu = $this->menuService->findOrFail($id);
+    //     return view('menu.edit', compact('menu'));
+    // }
+    
     public function edit($id)
     {
         $menu = $this->menuService->findOrFail($id);
         return view('menu.edit', compact('menu'));
     }
+
 
     public function destroy($id)
     {
@@ -61,7 +68,5 @@ class MenuController extends Controller
         $menu = $this->menuService->show($id);
         return view('menu.show', compact('menu'));
     }
-
-    
 
 }

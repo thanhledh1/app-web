@@ -9,13 +9,14 @@
 </head>
 
 <body>
+@extends('masteradmin')
+@section('content')
     <div class="container">
         <h2>Create New Menu</h2>
         <div class="row">
             <div class="col-lg-6">
                 <form action="{{ route('menu.store') }}" method="post">
                     @csrf
-                    
                     <div class="form-group">
                         <label for="title">Title</label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}">
@@ -49,10 +50,13 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
+                    <a href="{{ route('menu.index') }}" class="btn btn-light">Cancel</a>
+
                 </form>
             </div>
         </div>
     </div>
+@endsection
 </body>
 
 </html>
