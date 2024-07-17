@@ -6,7 +6,9 @@ use App\Http\Requests\PageRequest;
 use App\Http\Services\PageService;
 use App\Models\Page;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class PageController extends Controller
 {
@@ -17,18 +19,18 @@ class PageController extends Controller
         $this->pageService = $pageService;
     }
 
-    public function index()
+    public function index(): View
     {
         $pages = $this->pageService->index();
         return view('page.index', compact('pages'));
     }
 
-    public function create()
+    public function create(): View
     {
         return view('page.create');
     }
 
-    public function store(PageRequest $request) 
+    public function store(PageRequest $request) : RedirectResponse
     {
         $page = $this->pageService->store($request);
         if ($page) {
@@ -37,26 +39,26 @@ class PageController extends Controller
             return back()->withInput()->with('error', 'Failed to create page.');
     }
 
-    public function edit($id)
+    public function edit($id): View
     {
         $page = $this->pageService->findOrFail($id);
         return view('page.edit', compact('page'));
     }
 
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $this->pageService->destroy($id);
         return redirect()->route('page.index');
     }
 
-    public function update(Request $request, $id)
+    public function update(PageRequest $request, $id)
     {
         $this->pageService->update($request,$id);
 
         return redirect()->route('page.index')->with('success', 'Sửa thành công!');
     }
 
-    public function show($id)
+    public function show($id): View
     {
         try {
             $page = $this->pageService->show($id);

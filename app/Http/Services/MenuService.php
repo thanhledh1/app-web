@@ -9,17 +9,17 @@ use Illuminate\Http\Request;
 
 class MenuService
 {
-    public function index(): Menu
+    public function index()
     {
         return Menu::paginate(5);
     }
 
-    public function findOrFail($id): Menu
+    public function findOrFail($id)
     {
         return Menu::findOrFail($id);
     }
 
-    public function destroy($id) : JsonResponse
+    public function destroy($id) 
     {
         $menu = Menu::findOrFail($id);
         $menu->delete();
@@ -35,16 +35,16 @@ class MenuService
         $menu->save();
     }
 
-    public function updateOrder(Request $request)
+    public function updateOrder(MenuRequest $request)
     {
         $order = $request->input('order');
         foreach ($order as $item) {
-            $menu = Menu::find($item['id']);
-            $menu->position = $item['position'];
-            $menu->save();
+            Menu::where('id', $item['id'])->update(['position' => $item['position']]);
         }
+        return response()->json(['success' => true]);
     }
-    public function update(Request $request, $id)
+    
+    public function update(MenuRequest $request, $id)
     {
         $menu = Menu::find($id);
         $menu->fill($request->all());

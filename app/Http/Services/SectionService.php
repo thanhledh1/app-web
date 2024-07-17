@@ -25,7 +25,6 @@ class SectionService
     public function store(SectionRequest $request)
     {
         $validatedData = $request->validated();
-        // Array of image columns in the database
         $imageColumns = [
             'image_1', 'image_2', 'image_3', 'image_4',
             'image_5', 'image_6', 'image_7', 'image_8'
@@ -43,23 +42,19 @@ class SectionService
             }
         }
 
-        // Tạo một đối tượng Section mới bằng phương thức create
         $section = Section::create($validatedData);
-
         return response()->json($section, 201);
     }
 
     public function update(SectionRequest $request, $id)
     {
         $section = Section::findOrFail($id); 
-        // Lấy dữ liệu hợp lệ từ Request
         $validatedData = $request->validated();
-       
         $section->update($validatedData);
         return response()->json($section, 200); 
     }
 
-    public function updateServices(Request $request)
+    public function updateServices(SectionRequest $request)
     { {
             // Lấy section cần cập nhật theo ID
             $section = Section::find($request->input('id'));
@@ -67,7 +62,6 @@ class SectionService
                 // Lấy field và value từ request
                 $field = $request->input('field');
                 $value = $request->input('value');
-
                 // Cập nhật trường tương ứng
                 $section->$field = $value;
                 $section->save();
@@ -76,7 +70,7 @@ class SectionService
             return ['success' => false, 'message' => 'Failed to update content'];
         }
     }
-    public function updateImage(Request $request)
+    public function updateImage(SectionRequest $request)
     {
         if ($request->hasFile('image')) {
             // Lấy section cần cập nhật theo ID
@@ -100,7 +94,7 @@ class SectionService
 
         return ['success' => false];
     }
-    public function updateImageAbout(Request $request)
+    public function updateImageAbout(SectionRequest $request)
     {
         if ($request->hasFile('image1')) {
             $section = Section::find($request->id);
@@ -118,7 +112,7 @@ class SectionService
 
         return response()->json(['success' => false]);
     }
-    public function updateImageTeam(Request $request)
+    public function updateImageTeam(SectionRequest $request)
     {
         if ($request->hasFile('image2')) {
             $section = Section::find($request->id);

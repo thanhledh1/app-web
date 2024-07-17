@@ -12,7 +12,6 @@ class MenuPage extends Model
         'page_id',
 
      ];
-     protected $table = 'menu_pages'; // Tên bảng trong cơ sở dữ liệu
      public function menus(): BelongsTo
      {
          return $this->belongsTo(Menu::class,'menu_id','id');

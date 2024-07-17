@@ -21,9 +21,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'postlogin'])->name('postlogin');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('postlogin');
+Route::post('/log-out', [AuthController::class, 'logout'])->name('logout');
 // 
 Route::middleware(['auth'])->group(function () {
     Route::resource('users', UserController::class);
@@ -31,17 +31,16 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('section', SectionController::class);
     Route::resource('page', PageController::class);
 
-// update menu, secion in view
+    // update menu, secion in view
     Route::post('/update-order', [MenuController::class, 'updateOrder'])->name('menus.updateOrder');
     Route::post('/update-services', [SectionController::class, 'updateServices'])->name('section.updateService');
     Route::post('/update-image', [SectionController::class, 'updateImage'])->name('update.image');
     Route::post('/update-image-about', [SectionController::class, 'updateImageAbout'])->name('update.image1');
     Route::post('/update-image-team', [SectionController::class, 'updateImageTeam'])->name('update.image2');
     Route::post('master/{id}', [MasterController::class, 'updateMenu'])->name('updateMenu');
-     // Create view
+    // Create view
     Route::get('/create-web', [MasterController::class, 'index'])->name('master.index');
 });
-    Route::get('/error', function () {
-        return view('errors');
-    })->name('error.page');
-    
+Route::get('/error', function () {
+    return view('errors');
+})->name('error.page');

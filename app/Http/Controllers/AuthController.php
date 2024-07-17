@@ -15,12 +15,12 @@ class AuthController extends Controller
     }
 
 
-    public function login()
+    public function index()
     {
         return view('user.loginadmin');
     }
 
-    public function postLogin(Request $request)
+    public function login(Request $request)
     {
         $result = $this->authService->login($request);
 

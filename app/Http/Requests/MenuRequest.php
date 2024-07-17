@@ -19,7 +19,7 @@ class MenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|unique:menus',
+            'title' => 'required',
             'url' => 'required|string|unique:menus',
             'position' => 'required|integer|unique:menus',
         ];

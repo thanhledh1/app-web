@@ -15,7 +15,6 @@ class Page extends Model
         'logo',
         'user_id',
     ];
-    protected $table = 'pages';
 
     public function user():BelongsTo
     {

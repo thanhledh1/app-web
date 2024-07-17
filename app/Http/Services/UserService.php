@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    public function index(): User
+    public function index()
     {
         return User::paginate(7);
     }

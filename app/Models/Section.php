@@ -35,7 +35,6 @@ class Section extends Model
 
 
     ];
-    protected $table = 'sessions';
 
     public function pages():BelongsToMany
     {

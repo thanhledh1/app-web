@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class HomeService
 {
-    public function index(Request $request) : Page
+    public function index(Request $request) 
     {
         return Page::where('domain', $request->getHost())
         ->with('sessions')
