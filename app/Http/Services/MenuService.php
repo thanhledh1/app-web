@@ -35,7 +35,7 @@ class MenuService
         $menu->save();
     }
 
-    public function updateOrder(MenuRequest $request)
+    public function updateOrder(Request $request)
     {
         $order = $request->input('order');
         foreach ($order as $item) {

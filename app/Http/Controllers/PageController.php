@@ -64,10 +64,8 @@ class PageController extends Controller
             $page = $this->pageService->show($id);
             return view('page.show', compact('page'));
         } catch (ModelNotFoundException $e) {
-            // Xử lý nếu không tìm thấy trang và quay lại trang trước đó
             return back()->with('error', 'Page not found.');
         } catch (\Exception $e) {
-            // Xử lý ngoại lệ khác nếu có và quay lại trang trước đó
             return back()->with('error', 'Something went wrong.');
         }
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Services;
 
-use App\Http\Requests\MenuRequest;
 use App\Models\Menu;
 use App\Models\Page;
 use App\Models\Section;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MasterPageService
@@ -33,7 +33,7 @@ class MasterPageService
         return Menu::findOrFail($id);
     }
 
-    public function updateMenu(MenuRequest $request, $id)
+    public function updateMenu(Request $request, $id)
     {
         $menu = Menu::findOrFail($id);
         $menu->update([

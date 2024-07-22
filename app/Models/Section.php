@@ -35,7 +35,7 @@ class Section extends Model
 
 
     ];
-
+    protected $table = "sessions";
     public function pages():BelongsToMany
     {
         return $this->belongsToMany(Page::class, 'section_page', 'session_id', 'page_id');

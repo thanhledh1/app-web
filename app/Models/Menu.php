@@ -16,6 +16,7 @@ class Menu extends Model
         'parent_id',
 
     ];
+    protected $table = "menus";
 
     public function pages(): BelongsToMany
     {
